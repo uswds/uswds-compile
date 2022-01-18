@@ -1,7 +1,7 @@
 {
   "name": "@uswds/compile",
-  "version": "2.0.0-beta.1",
-  "description": "Foo A gulp-based compiler for USWDS Sass and JavaScript",
+  "version": "1.0.0-beta.1",
+  "description": "A Gulp-based compiler for USWDS Sass",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uswds/uswds-gulp.git"
+    "url": "git+https://github.com/uswds/uswds-compile.git"
   },
   "author": "USWDS Core team",
   "contributors": [
@@ -20,9 +20,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/uswds/uswds-gulp/issues"
+    "url": "https://github.com/uswds/uswds-compile/issues"
   },
-  "homepage": "https://github.com/uswds/uswds-gulp#readme",
+  "homepage": "https://github.com/uswds/uswds-compile#readme",
   "dependencies": {
     "autoprefixer": "^10.3.1",
     "del": "^6.0.0",
