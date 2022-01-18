@@ -1,5 +1,4 @@
-:warning: This project is under development and will be published on January 20, 2022.
-
+:warning: This project is under development (Alpha 0) and will publish its first Beta on January 20, 2022.
 
 # USWDS Compile
 
