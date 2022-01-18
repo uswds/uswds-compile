@@ -1,3 +1,6 @@
+:warning: This project is under development and will be published on January 20, 2022.
+
+
 # USWDS Compile
 
 Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
@@ -9,6 +12,8 @@ Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets
 - [uswds](https://www.npmjs.com/package/uswds)
 
 ## Installation
+
+:warning: We have not published this project yet. 
 
 Install `compile` in the project root:
 
@@ -44,8 +49,8 @@ const uswds = require("@uswds/compile");
  * Set as many as you need
  */ 
 
-uswds.paths.dist.css = './assets/css/';
-uswds.paths.dist.sass = './sass/';
+uswds.paths.dist.css = './assets/css';
+uswds.paths.dist.sass = './sass';
 
 /** 
  * Exports
@@ -121,15 +126,7 @@ With that setup, you could do the following in the terminal:
 ---
 
 ### Autoprefixer
-We use autoprefixer for maximum browser compatibility. To ensure you're targeting the correct browsers we use a `.browserslistrc` file. **If you don't already have one** copy our file to your current directory (the project root):
-
-```bash
-cp node_modules/uswds-gulp/.browserslistrc .
-```
-
-OR
-
-If you already have a `.browserslistrc` make sure you're targeting the following browsers:
+We use Autoprefixer for maximum browser compatibility. We target the the following browsers. When you compile with the USWDS compiler, we will apply Autoprefixer to all compiled code.
 
 ```bash
 > 2%
@@ -140,36 +137,10 @@ not dead
 
 ---
 
-### Initialize your USWDS project
+### Updating the USWDS icon sprite
 
-Initialization does the following:
+After running either `init` or `copyAssets`, you'll find USWDS images in the `paths.dist.img` directory. Any icon SVG file in `usa-icons` diretory within the `paths.dist.img` directory will compile into the icon sprite when running the `compileIcons` function.
 
-- Copies settings files and the USWDS base Sass file to your project Sass directory
-- Copies images, fonts, and javascript files to the directories you set above
-- Compiles the USWDS Sass into a usable CSS file, called `styles.css` by default
-
-Intitialize your USWDS project by running the following command:
-
-```bash
-npx gulp init
-```
-
----
-
-Edit your USWDS settings in the new settings files and add custom Sass to the new `_uswds-theme-custom-styles.scss` file. Watch these files and compile any changes with
-
-```bash
-gulp watch
-```
-
----
-
-### Update SVG sprite
-
-After running `gulp init`, the USWDS images will be moved into your project. Open the USWDS `images` directory and find the `usa-icons` and `usa-icons-unused` directories. Either add your own SVGs to the `usa-icons` directory or move icons from `usa-icons-unused` into `usa-icons` and rebuild the sprite with
-
-```bash
-gulp buildSvgSprite
-```
+We'll be updating and improving the icon workflow in subsequent releases.
 
 :rocket:
