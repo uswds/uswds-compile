@@ -15,17 +15,17 @@ Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets
 
 :warning: We have not published this project yet. 
 
-Install `compile` in the project root:
+Install `@uswds/compile` in the project root:
 
 ```bash
-npm install @uswds/compile --save
+npm install @uswds/compile --save-dev
 ```
 
 ## Usage
 
 ### Overview
 1. Create a `gulpfile.js` file in the project root that includes the following:
-    -  Import of the `@uswds/compile` package
+    -  Imported `@uswds/compile` package
     -  Any project path settings you wish to modify (see [Path settings](#path-settings), below)
     -  Exports for the functions/tasks you need (see [Functions](#functions), below)
 1. In the terminal run `npx gulp [function]`
