@@ -1,72 +1,131 @@
-# USWDS Gulp pipeline for copying assets and compiling Sass
+:warning: This project is under development (Alpha 0) and will publish its first Beta on January 20, 2022.
 
-A simple [Gulp 4.0](https://gulpjs.com/) workflow for transforming USWDS Sass into browser-readable CSS.
+# USWDS Compile
 
-**Note:** You do _not_ need to clone this repo into your project. Follow the instructions below.
+Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
 
 ## Requirements
 
-You'll need to be familiar with the command line.
-
-You'll need [node](https://nodejs.org/en/download/) and [npm](https://www.npmjs.com/get-npm).
-
-You'll need to install the following packages via `npm`:
-
-- autoprefixer
-- gulp@^4.0.2
-- gulp-replace
-- sass
-- gulp-sass
-- gulp-sourcemaps
-- postcss
-- gulp-postcss
-- gulp-rename
-- gulp-svg-sprite
-- postcss-csso
-- uswds@latest
-- uswds-gulp@github:uswds/uswds-gulp
+- [Node.js](https://nodejs.org/en/download/)
+- [npm](https://www.npmjs.com/get-npm)
+- [uswds](https://www.npmjs.com/package/uswds)
 
 ## Installation
 
-If you've never installed Gulp, you'll need to install the Gulp command line interface:
+:warning: We have not published this project yet. 
+
+Install `@uswds/compile` in the project root:
 
 ```bash
-npm install gulp-cli -g
-```
-
-Ensure your project has a `package.json` file. You can create one by following the instructions on the [USWDS fundamentals and quickstart guide](https://designsystem.digital.gov/documentation/fundamentals/).
-
-Add all the required dependencies at once with following command from your project's root directory:
-
-```bash
-npm install autoprefixer gulp gulp-replace sass gulp-sass gulp-sourcemaps gulp-rename gulp-svg-sprite gulp-postcss postcss postcss-csso uswds uswds-gulp@github:uswds/uswds-gulp --save-dev
+npm install @uswds/compile --save-dev
 ```
 
 ## Usage
 
-**If you don't already have a project gulpfile,** copy the `gulpfile.js` to your current directory (the project root):
+### Overview
+1. Create a `gulpfile.js` file in the project root that includes the following:
+    -  Imported `@uswds/compile` package
+    -  Any project path settings you wish to modify (see [Path settings](#path-settings), below)
+    -  Exports for the functions/tasks you need (see [Functions](#functions), below)
+1. In the terminal run `npx gulp [function]`
 
-```bash
-cp node_modules/uswds-gulp/gulpfile.js .
+### Gulpfile setup
+Create a file called `gulpfile.js` at the root of your project (or use an existing Gulpfile if one already exists). It needs to do the following
+
+- Import the `@uswds/compile` package
+- Set any project settings
+- Export the functions/tasks you need
+
+Here's an example of how your `gulpfile.js` might look:
+
+```js
+/* gulpfile.js */
+
+const uswds = require("@uswds/compile");
+
+/** 
+ * Path settings
+ * Set as many as you need
+ */ 
+
+uswds.paths.dist.css = './assets/css';
+uswds.paths.dist.sass = './sass';
+
+/** 
+ * Exports
+ * Add as many as you need
+ */ 
+
+exports.init = uswds.init;
+exports.compile = uswds.compile;
 ```
 
-OR
+### Path settings
+Use path settings to customize where USWDS Compile looks for USWDS source and outputs processed files.
 
-**If you do already have a project gulpfile,** copy and rename the USWDS gulpfile (then you can manually add the contents of the USWDS gulpfile to your existing gulpfile and continue with the instructions):
+Setting | Default | Description
+--- | --- | ---
+`paths.src.uswds` | `"./node_modules/uswds/dist"` | Source location of the `uswds` package
+`paths.src.sass` | `"./node_modules/uswds/dist/scss"` | Source location of the USWDS Sass 
+`paths.src.theme` | `"./node_modules/uswds/dist/scss/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)
+`paths.src.fonts` | `"./node_modules/uswds/dist/fonts"` | Source location of the USWDS fonts
+`paths.src.img` | `"./node_modules/uswds/dist/img"` | Source location of the USWDS images
+`paths.src.js` | `"./node_modules/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
+`paths.src.projectSass` | `"./sass"` | Source location of any exisiting project Sass files outside of `paths.dist.sass`. The `watch` script will watch this directory for changes.
+`paths.dist.sass` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
+`paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
+`paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
+`paths.dist.js` | `"./assets/uswds/js"` | Project destination for compiled JavaScript
+`paths.dist.css` | `"./assets/uswds/css"` | Project destination for compiled CSS
 
-```bash
-cp node_modules/uswds-gulp/gulpfile.js gulpfile-uswds.js
+### Functions
+Export USWDS Compile functions in your project's `gulpfile.js` to use them in your project.
+
+Function | Description
+--- | ---
+`compile` | `compileSass` + `compileIcons`
+`compileIcons` | Build the USWDS icon sprite into `paths.dist.img`
+`compileSass` | Compile Sass into `paths.dist.css`
+`default` | `watch`
+`copyAll` | `copySetup` + `copyAssets`
+`copyAssets` | Copies all static assets: `copyFonts` + `copyImages` + `copyJS`  
+`copyFonts` | Copy USWDS fonts to `paths.dist.fonts`
+`copyImages` | Copy USWDS images to `paths.dist.img`
+`copyJS` | Copy USWDS compiled JavaScript to `paths.dist.js`
+`copySetup` | Copy USWDS theme files (Sass entry point and settings files) from the `uswds` package to `paths.dist.sass`
+`init` | `copyAll` + `compile`
+`updateUswds` | `copyAssets` + `compile`
+`watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.sass` and `paths.src.projectSass`
+
+
+## Running the compile functions
+For any function you defined as an `export` in your `gulpfile.js` you can run `npx gulp [function]`
+
+For example, if you have the following `gulpfile.js`:
+
+```
+/* gulpfile,js */
+
+...
+
+exports.compile = uswds.compile;
+exports.watch = uswds.watch;
+exports.init = uswds.init;
+exports.update = uswds.updateUswds;
+exports.default = uswds.watch;
 ```
 
-We use autoprefixer for maximum browser compatibility. To ensure you're targeting the correct browsers we use a `.browserslistrc` file. **If you don't already have one** copy our file to your current directory (the project root):
+With that setup, you could do the following in the terminal:
 
-```bash
-cp node_modules/uswds-gulp/.browserslistrc .
-```
+- **Compile Sass:** `npx gulp compile` or `npx gulp`
+- **Watch for changes and recompile:** `npx gulp watch`
+- **Initialize a new project:** `npx gulp init`
+- **Update USWDS statci assets and recompile:** `npx gulp update`
 
-OR
+---
 
-If you already have a `.browserslistrc` make sure you're targeting the following browsers:
+### Autoprefixer
+We use Autoprefixer for maximum browser compatibility. We target the the following browsers. When you compile with the USWDS compiler, we will apply Autoprefixer to all compiled code.
 
 ```bash
 > 2%
@@ -77,48 +136,10 @@ not dead
 
 ---
 
-Open `gulpfile.js` in a text editor. In the `Paths` section, set the following constants with the proper paths. Don't use trailing slashes in the paths. All paths should be relative to the project root.
+### Updating the USWDS icon sprite
 
-- `PROJECT_SASS_SRC`: The directory where we'll save your USWDS settings files and the project's custom Sass.
-- `IMG_DEST`: The directory where we'll save the USWDS images
-- `FONTS_DEST`: The directory where we'll save the USWDS fonts
-- `JS_DEST`: The directory where we'll save the USWDS javascript
-- `CSS_DEST`: The destination of the final, compiled CSS
+After running either `init` or `copyAssets`, you'll find USWDS images in the `paths.dist.img` directory. Any icon SVG file in `usa-icons` diretory within the `paths.dist.img` directory will compile into the icon sprite when running the `compileIcons` function.
 
----
-
-Save `gulpfile.js` with these updated paths.
-
----
-
-Initialize your USWDS project. Initialization does the following:
-
-- Copies settings files and the USWDS base Sass file to your project Sass directory
-- Copies images, fonts, and javascript files to the directories you set above
-- Compiles the USWDS Sass into a usable CSS file, called `styles.css` by default
-
-Intitialize your USWDS project by running the following command:
-
-```bash
-gulp init
-```
-
----
-
-Edit your USWDS settings in the new settings files and add custom Sass to the new `_uswds-theme-custom-styles.scss` file. Watch these files and compile any changes with
-
-```bash
-gulp watch
-```
-
----
-
-### Update SVG sprite
-
-After running `gulp init`, the USWDS images will be moved into your project. Open the USWDS `images` directory and find the `usa-icons` and `usa-icons-unused` directories. Either add your own SVGs to the `usa-icons` directory or move icons from `usa-icons-unused` into `usa-icons` and rebuild the sprite with
-
-```bash
-gulp svg-sprite
-```
+We'll be updating and improving the icon workflow in subsequent releases.
 
 :rocket:
