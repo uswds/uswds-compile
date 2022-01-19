@@ -18,7 +18,7 @@
     "James Mejia <james.mejia@gsa.gov>",
     "Scott Queen <scott.queen@gsa.gov>"
   ],
-  "license": "See LICENSE.md",
+  "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://github.com/uswds/uswds-compile/issues"
   },
@@ -36,5 +36,6 @@
     "postcss": "^8.3.6",
     "postcss-csso": "^5.0.1",
     "sass": "^1.37.5"
-  }
+  },
+  "devDependencies": {}
 }
