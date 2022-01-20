@@ -1,5 +1,3 @@
-:warning: This project is under development (Alpha 0) and will publish its first Beta on January 20, 2022.
-
 # USWDS Compile
 
 Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
@@ -11,8 +9,6 @@ Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets
 - [uswds](https://www.npmjs.com/package/uswds)
 
 ## Installation
-
-:warning: We have not published this project yet. 
 
 Install `@uswds/compile` in the project root:
 
