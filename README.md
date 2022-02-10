@@ -45,7 +45,7 @@ const uswds = require("@uswds/compile");
  */ 
 
 uswds.paths.dist.css = './assets/css';
-uswds.paths.dist.sass = './sass';
+uswds.paths.dist.theme = './sass';
 
 /** 
  * Exports
@@ -67,8 +67,8 @@ Setting | Default | Description
 `paths.src.fonts` | `"./node_modules/uswds/dist/fonts"` | Source location of the USWDS fonts
 `paths.src.img` | `"./node_modules/uswds/dist/img"` | Source location of the USWDS images
 `paths.src.js` | `"./node_modules/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
-`paths.src.projectSass` | `"./sass"` | Source location of any exisiting project Sass files outside of `paths.dist.sass`. The `watch` script will watch this directory for changes.
-`paths.dist.sass` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
+`paths.src.projectSass` | `"./sass"` | Source location of any exisiting project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
+`paths.dist.theme` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
 `paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
 `paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
 `paths.dist.js` | `"./assets/uswds/js"` | Project destination for compiled JavaScript
@@ -88,10 +88,10 @@ Function | Description
 `copyFonts` | Copy USWDS fonts to `paths.dist.fonts`
 `copyImages` | Copy USWDS images to `paths.dist.img`
 `copyJS` | Copy USWDS compiled JavaScript to `paths.dist.js`
-`copySetup` | Copy USWDS theme files (Sass entry point and settings files) from the `uswds` package to `paths.dist.sass`
+`copySetup` | Copy USWDS theme files (Sass entry point and settings files) from the `uswds` package to `paths.dist.theme`
 `init` | `copyAll` + `compile`
 `updateUswds` | `copyAssets` + `compile`
-`watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.sass` and `paths.src.projectSass`
+`watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.theme` and `paths.src.projectSass`
 
 
 ## Running the compile functions
