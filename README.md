@@ -4,7 +4,7 @@ Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/download/)
+- [Node.js (v15 or higher)](https://nodejs.org/en/download/)
 - [npm](https://www.npmjs.com/get-npm)
 - [uswds](https://www.npmjs.com/package/uswds)
 
