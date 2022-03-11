@@ -17,6 +17,7 @@ SETTINGS
 ----------------------------------------
 */
 let settings = {
+  version: 2,
   compile: {
     paths: {
       src: {
@@ -27,7 +28,6 @@ let settings = {
         img: null,
         js: null,
         projectSass: "./sass",
-        version: 2,
         defaults: {
           v2: {
             uswds: "./node_modules/uswds/dist",
