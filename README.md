@@ -4,7 +4,7 @@ Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/download/)
+- [Node.js (v15 or higher)](https://nodejs.org/en/download/)
 - [npm](https://www.npmjs.com/get-npm)
 - [uswds](https://www.npmjs.com/package/uswds)
 
@@ -39,18 +39,18 @@ Here's an example of how your `gulpfile.js` might look:
 
 const uswds = require("@uswds/compile");
 
-/** 
+/**
  * Path settings
  * Set as many as you need
- */ 
+ */
 
 uswds.paths.dist.css = './assets/css';
 uswds.paths.dist.theme = './sass';
 
-/** 
+/**
  * Exports
  * Add as many as you need
- */ 
+ */
 
 exports.init = uswds.init;
 exports.compile = uswds.compile;
@@ -62,12 +62,12 @@ Use path settings to customize where USWDS Compile looks for USWDS source and ou
 Setting | Default | Description
 --- | --- | ---
 `paths.src.uswds` | `"./node_modules/uswds/dist"` | Source location of the `uswds` package
-`paths.src.sass` | `"./node_modules/uswds/dist/scss"` | Source location of the USWDS Sass 
+`paths.src.sass` | `"./node_modules/uswds/dist/scss"` | Source location of the USWDS Sass
 `paths.src.theme` | `"./node_modules/uswds/dist/scss/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)
 `paths.src.fonts` | `"./node_modules/uswds/dist/fonts"` | Source location of the USWDS fonts
 `paths.src.img` | `"./node_modules/uswds/dist/img"` | Source location of the USWDS images
 `paths.src.js` | `"./node_modules/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
-`paths.src.projectSass` | `"./sass"` | Source location of any exisiting project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
+`paths.src.projectSass` | `"./sass"` | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
 `paths.dist.theme` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
 `paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
 `paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
@@ -83,12 +83,12 @@ Function | Description
 `compileIcons` | Build the USWDS icon sprite into `paths.dist.img`
 `compileSass` | Compile Sass into `paths.dist.css`
 `default` | `watch`
-`copyAll` | `copySetup` + `copyAssets`
-`copyAssets` | Copies all static assets: `copyFonts` + `copyImages` + `copyJS`  
+`copyAll` | `copyTheme` + `copyAssets`
+`copyAssets` | Copies all static assets: `copyFonts` + `copyImages` + `copyJS`
 `copyFonts` | Copy USWDS fonts to `paths.dist.fonts`
 `copyImages` | Copy USWDS images to `paths.dist.img`
 `copyJS` | Copy USWDS compiled JavaScript to `paths.dist.js`
-`copySetup` | Copy USWDS theme files (Sass entry point and settings files) from the `uswds` package to `paths.dist.theme`
+`copyTheme` | Copy USWDS theme files (Sass entry point and settings files) from the `uswds` package to `paths.dist.theme`
 `init` | `copyAll` + `compile`
 `updateUswds` | `copyAssets` + `compile`
 `watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.theme` and `paths.src.projectSass`
@@ -116,7 +116,7 @@ With that setup, you could do the following in the terminal:
 - **Compile Sass:** `npx gulp compile` or `npx gulp`
 - **Watch for changes and recompile:** `npx gulp watch`
 - **Initialize a new project:** `npx gulp init`
-- **Update USWDS statci assets and recompile:** `npx gulp update`
+- **Update USWDS static assets and recompile:** `npx gulp update`
 
 ---
 
@@ -134,7 +134,7 @@ not dead
 
 ### Updating the USWDS icon sprite
 
-After running either `init` or `copyAssets`, you'll find USWDS images in the `paths.dist.img` directory. Any icon SVG file in `usa-icons` diretory within the `paths.dist.img` directory will compile into the icon sprite when running the `compileIcons` function.
+After running either `init` or `copyAssets`, you'll find USWDS images in the `paths.dist.img` directory. Any icon SVG file in `usa-icons` directory within the `paths.dist.img` directory will compile into the icon sprite when running the `compileIcons` function.
 
 We'll be updating and improving the icon workflow in subsequent releases.
 
