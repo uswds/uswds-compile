@@ -1,20 +1,6 @@
-/*
-* * * * * ==============================
-* * * * * ==============================
-* * * * * ==============================
-* * * * * ==============================
-========================================
-========================================
-========================================
-----------------------------------------
-USWDS SASS GULPFILE
-----------------------------------------
-*/
-
 const autoprefixer = require("autoprefixer");
 const csso = require("postcss-csso");
 const { src, dest, series, parallel, watch } = require("gulp");
-const pkg = require("../../uswds/package.json").version;
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass"));
@@ -31,16 +17,35 @@ SETTINGS
 ----------------------------------------
 */
 let settings = {
+  version: 2,
   compile: {
     paths: {
       src: {
-        uswds: "./node_modules/uswds/dist",
-        sass: "./node_modules/uswds/dist/scss",
-        theme: "./node_modules/uswds/dist/scss/theme",
-        fonts: "./node_modules/uswds/dist/fonts",
-        img: "./node_modules/uswds/dist/img",
-        js: "./node_modules/uswds/dist/js",
+        uswds: null,
+        sass: null,
+        theme: null,
+        fonts: null,
+        img: null,
+        js: null,
         projectSass: "./sass",
+        defaults: {
+          v2: {
+            uswds: "./node_modules/uswds/dist",
+            sass: "./node_modules/uswds/dist/scss",
+            theme: "./node_modules/uswds/dist/scss/theme",
+            fonts: "./node_modules/uswds/dist/fonts",
+            img: "./node_modules/uswds/dist/img",
+            js: "./node_modules/uswds/dist/js",    
+          },
+          v3: {
+            uswds: "./node_modules/@uswds",
+            sass: "./node_modules/@uswds/uswds/packages",
+            theme: "./node_modules/@uswds/uswds/dist/theme",
+            fonts: "./node_modules/@uswds/uswds/dist/fonts",
+            img: "./node_modules/@uswds/uswds/dist/img",
+            js: "./node_modules/@uswds/uswds/dist/js",
+          }
+        }
       },
       /**
        * ? project paths
@@ -70,6 +75,13 @@ let settings = {
 
 let paths = settings.compile.paths;
 
+let getSrcFrom = (key) => {
+  if (paths.src[key]) {
+    return paths.src[key];
+  }
+  return paths.src.defaults[`v${settings.version}`][key];
+}
+
 /*
 ----------------------------------------
 TASKS
@@ -81,22 +93,23 @@ TASKS
 USWDS specific tasks
 ----------------------------------------
 */
+
 const copy = {
   theme() {
-    log(colorBlue, `Copying USWDS theme files to ${paths.dist.theme}`);
-    return src(`${paths.src.theme}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.theme));
+    log(colorBlue, `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`);
+    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.theme));
   },
   fonts() {
-    log(colorBlue, `Copying USWDS fonts to ${paths.dist.fonts}`);
-    return src(`${paths.src.fonts}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.fonts));
+    log(colorBlue, `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`);
+    return src(`${getSrcFrom("fonts")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.fonts));
   },
   images() {
-    log(colorBlue, `Copying USWDS images to ${paths.dist.img}`);
-    return src(`${paths.src.img}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.img));
+    log(colorBlue, `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`);
+    return src(`${getSrcFrom("img")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.img));
   },
   js() {
-    log(colorBlue, `Copying USWDS JavaScript to ${paths.dist.js}`);
-    return src(`${paths.src.js}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.js));
+    log(colorBlue, `Copy USWDS compiled JS: ${getSrcFrom("js")} →  ${paths.dist.js}`);
+    return src(`${getSrcFrom("js")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.js));
   },
 };
 
@@ -111,8 +124,20 @@ function handleError(error) {
   return this.emit("end");
 }
 
-function buildSass() {
+function logVersion() {
+  log(colorBlue, `uswds.version: ${settings.version}`);
+  return Promise.resolve('logged version');
+}
 
+function buildSass() {
+  let uswdsPath = "uswds"
+  if (settings.version === 3) {
+    uswdsPath = "@uswds/uswds";
+  }
+
+  const pkg = require(`../../${uswdsPath}/package.json`).version;
+
+  log(colorBlue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
     plugins: [
       autoprefixer({
@@ -123,9 +148,14 @@ function buildSass() {
       csso({ forceMediaMerge: false }),
     ],
     includes: [
-      paths.dist.theme,
-      paths.src.sass,
-      `${paths.src.sass}/packages`.replaceAll("//", "/")
+      // 1. local theme files
+      paths.dist.theme, 
+      // 2. uswds organization directory (npm packages)
+      getSrcFrom("uswds"),
+      // 3. v2 packages directory
+      `${getSrcFrom("sass")}/packages`.replaceAll("//", "/"),
+      // 4. local uswds package
+      getSrcFrom("sass")
     ],
   };
 
@@ -198,26 +228,29 @@ exports.copyTheme = copy.theme;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
 exports.copyJS = copy.js;
-exports.copyAssets = parallel(
+exports.copyAssets = series(
   copy.fonts,
   copy.images,
   copy.js
 );
-exports.copyAll = parallel(
+exports.copyAll = series(
   copy.theme,
   this.copyAssets
 );
-exports.compileSass = buildSass;
+exports.compileSass = series(logVersion, buildSass);
 exports.compileIcons = series(buildSprite, renameSprite, cleanSprite);
-exports.compile = parallel(
-  buildSass,
-  this.compileIcons
+exports.compile = series(
+  logVersion, 
+  parallel(
+    buildSass,
+    this.compileIcons
+  )
 );
 exports.updateUswds = series(
   this.copyAssets,
   this.compile
 );
 
-exports.init = series(this.copyAll, this.compile);
-exports.watch = series(buildSass, watchSass);
+exports.init = series(logVersion, this.copyAll, this.compile);
+exports.watch = series(logVersion, buildSass, watchSass);
 exports.default = this.watch;
