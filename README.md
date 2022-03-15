@@ -40,6 +40,12 @@ Here's an example of how your `gulpfile.js` might look:
 const uswds = require("@uswds/compile");
 
 /**
+ * USWDS version
+ */
+
+uswds.settings.version = 3;
+
+/**
  * Path settings
  * Set as many as you need
  */
@@ -56,17 +62,26 @@ exports.init = uswds.init;
 exports.compile = uswds.compile;
 ```
 
-### Path settings
-Use path settings to customize where USWDS Compile looks for USWDS source and outputs processed files.
+### USWDS version setting
+USWDS is changing its file structure and package naming convention starting with USWDS 3.0. Use the USWDS version key to compile properly with the version of USWDS you're using. 
+
+**When migrating from USWDS 2.x to USWDS 3.x, simply update the value of `settings.version` to `3` once you've installed `@uswds/uswds` with npm.**
 
 Setting | Default | Description
 --- | --- | ---
-`paths.src.uswds` | `"./node_modules/uswds/dist"` | Source location of the `uswds` package
-`paths.src.sass` | `"./node_modules/uswds/dist/scss"` | Source location of the USWDS Sass
-`paths.src.theme` | `"./node_modules/uswds/dist/scss/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)
-`paths.src.fonts` | `"./node_modules/uswds/dist/fonts"` | Source location of the USWDS fonts
-`paths.src.img` | `"./node_modules/uswds/dist/img"` | Source location of the USWDS images
-`paths.src.js` | `"./node_modules/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
+`settings.version` | `2` | The major version of the `uswds` package used in the project. USWDS 2.x projects should use `2` and USWDS 3.x+ projects should use `3`.
+
+### Path settings
+Use path settings to customize where USWDS Compile looks for USWDS source and outputs processed files. **The value of the default may depend on the USWDS version you've defined in `settings.version`.** When applicable, the relevant value of `settings.version` precedes the default.
+
+Setting | Default | Description
+--- | --- | ---
+`paths.src.uswds` | `2`: `"./node_modules/uswds/dist"`<br />`3`: `"./node_modules/@uswds"`  | Source location of the `uswds` package
+`paths.src.sass` | `2`: `"./node_modules/uswds/dist/scss"`<br />`3`: `"./node_modules/@uswds/uswds/packages"` | Source location of the USWDS Sass
+`paths.src.theme` | `2`: `"./node_modules/uswds/dist/scss/theme"`<br />`3`: `"./node_modules/@uswds/uswds/dist/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)
+`paths.src.fonts` | `2`: `"./node_modules/uswds/dist/fonts"`<br />`3`: `"./node_modules/@uswds/uswds/dist/fonts"` | Source location of the USWDS fonts
+`paths.src.img` | `2`: `"./node_modules/uswds/dist/img"`<br />`3`: `"./node_modules/@uswds/uswds/dist/img"` | Source location of the USWDS images
+`paths.src.js` | `2`: `"./node_modules/uswds/dist/js"`<br />`3`: `"./node_modules/@uswds/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
 `paths.src.projectSass` | `"./sass"` | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
 `paths.dist.theme` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
 `paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
