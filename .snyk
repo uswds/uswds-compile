@@ -1,0 +1,114 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.24.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-CSSWHAT-1298035:
+    - gulp-svg-sprite > svg-sprite > svgo > css-select > css-what:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+  SNYK-JS-GLOBPARENT-1016905:
+    - gulp > glob-watcher > chokidar > glob-parent:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > vinyl-fs > glob-stream > glob-parent:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+  SNYK-JS-NTHCHECK-1586032:
+    - gulp-svg-sprite > svg-sprite > svgo > css-select > nth-check:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+  SNYK-JS-UNSETVALUE-2400660:
+    - gulp > glob-watcher > chokidar > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > glob-watcher > anymatch > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > gulp-cli > matchdep > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > glob-watcher > anymatch > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > gulp-cli > matchdep > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > glob-watcher > anymatch > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > gulp-cli > matchdep > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.002Z'
+    - gulp > glob-watcher > anymatch > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > matchdep > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > anymatch > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > readdirp > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > liftoff > findup-sync > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > matchdep > findup-sync > micromatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > anymatch > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > readdirp > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > liftoff > findup-sync > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > matchdep > findup-sync > micromatch > braces > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > matchdep > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > anymatch > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > readdirp > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > liftoff > findup-sync > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > matchdep > findup-sync > micromatch > extglob > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: No fix available
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > glob-watcher > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.003Z'
+    - gulp > gulp-cli > liftoff > findup-sync > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+    - gulp > gulp-cli > matchdep > findup-sync > micromatch > nanomatch > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+    - gulp > glob-watcher > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+    - gulp > glob-watcher > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+    - gulp > gulp-cli > liftoff > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+    - gulp > gulp-cli > matchdep > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value:
+        reason: None given
+        expires: '2022-04-27T15:51:23.004Z'
+patch: {}

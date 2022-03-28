@@ -36,8 +36,5 @@
     "postcss": "8.4.8",
     "postcss-csso": "5.0.1",
     "sass-embedded": "1.49.9"
-  },
-  "devDependencies": {
-    "snyk": "^1.885.0"
   }
 }
