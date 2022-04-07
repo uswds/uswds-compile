@@ -35,7 +35,7 @@ let settings = {
             theme: "./node_modules/uswds/dist/scss/theme",
             fonts: "./node_modules/uswds/dist/fonts",
             img: "./node_modules/uswds/dist/img",
-            js: "./node_modules/uswds/dist/js",    
+            js: "./node_modules/uswds/dist/js",
           },
           v3: {
             uswds: "./node_modules/@uswds",
@@ -52,11 +52,12 @@ let settings = {
        * - all paths are relative to the project root
        */
       dist: {
-        theme: "./sass",
+        scss: "./assets/uwds/scss",
         img: "./assets/uswds/img",
         fonts: "./assets/uswds/fonts",
         js: "./assets/uswds/js",
         css: "./assets/uswds/css",
+        custom: "./sass"
       },
     },
     browserslist: [
@@ -95,9 +96,9 @@ USWDS specific tasks
 */
 
 const copy = {
-  theme() {
-    log(colorBlue, `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`);
-    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.theme));
+  scss() {
+    log(colorBlue, `Copy USWDS scss files: ${getSrcFrom("theme")} → ${paths.dist.scss}`);
+    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.scss));
   },
   fonts() {
     log(colorBlue, `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`);
@@ -149,37 +150,39 @@ function buildSass() {
     ],
     includes: [
       // 1. local theme files
-      paths.dist.theme, 
-      // 2. uswds organization directory (npm packages)
+      `${paths.dist.custom}/*.scss`,
+      // 2. uswds css files
+      paths.dist.scss,
+      // 3. uswds organization directory (npm packages)
       getSrcFrom("uswds"),
-      // 3. v2 packages directory
+      // 4. v2 packages directory
       `${getSrcFrom("sass")}/packages`.replaceAll("//", "/"),
-      // 4. local uswds package
+      // 5. local uswds package
       getSrcFrom("sass")
     ],
   };
 
   return (
-    src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
-      .pipe(sourcemaps.init({ largeFile: true }))
-      .pipe(
-        sass({ includePaths: buildSettings.includes })
-          .on("error", handleError)
-      )
-      .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
-      .pipe(postcss(buildSettings.plugins))
-      .pipe(sourcemaps.write("."))
-      .pipe(dest(paths.dist.css))
+      src([`${paths.dist.custom}/*.scss`.replaceAll("//", "/")])
+          .pipe(sourcemaps.init({ largeFile: true }))
+          .pipe(
+              sass({ includePaths: buildSettings.includes })
+                  .on("error", handleError)
+          )
+          .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
+          .pipe(postcss(buildSettings.plugins))
+          .pipe(sourcemaps.write("."))
+          .pipe(dest(paths.dist.css))
   );
 }
 
 function watchSass() {
   return watch(
-    [
-      `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"), 
-      `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/")
-    ], buildSass);
-};
+      [
+        `${paths.dist.scss}/**/*.scss`.replaceAll("//", "/"),
+        `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/")
+      ], buildSass);
+}
 
 function buildSprite() {
   const config = {
@@ -205,17 +208,17 @@ function buildSprite() {
   return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
-    .pipe(svgSprite(config))
-    .on("error", handleError)
-    .pipe(dest(`${paths.dist.img}`));
+      .pipe(svgSprite(config))
+      .on("error", handleError)
+      .pipe(dest(`${paths.dist.img}`));
 }
 
 function renameSprite() {
   return src(`${paths.dist.img}/symbol/svg/sprite.symbol.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
-    .pipe(rename(`${paths.dist.img}/sprite.svg`.replaceAll("//", "/")))
-    .pipe(dest(`./`));
+      .pipe(rename(`${paths.dist.img}/sprite.svg`.replaceAll("//", "/")))
+      .pipe(dest(`./`));
 }
 
 function cleanSprite() {
@@ -224,31 +227,31 @@ function cleanSprite() {
 
 exports.settings = settings;
 exports.paths = paths;
-exports.copyTheme = copy.theme;
+exports.copyScss = copy.scss;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
 exports.copyJS = copy.js;
 exports.copyAssets = series(
-  copy.fonts,
-  copy.images,
-  copy.js
+    copy.fonts,
+    copy.images,
+    copy.js,
+    copy.scss,
 );
 exports.copyAll = series(
-  copy.theme,
-  this.copyAssets
+    this.copyAssets
 );
 exports.compileSass = series(logVersion, buildSass);
 exports.compileIcons = series(buildSprite, renameSprite, cleanSprite);
 exports.compile = series(
-  logVersion, 
-  parallel(
-    buildSass,
-    this.compileIcons
-  )
+    logVersion,
+    parallel(
+        buildSass,
+        this.compileIcons
+    )
 );
 exports.updateUswds = series(
-  this.copyAssets,
-  this.compile
+    this.copyAssets,
+    this.compile
 );
 
 exports.init = series(logVersion, this.copyAll, this.compile);
