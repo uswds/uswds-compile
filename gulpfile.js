@@ -119,17 +119,17 @@ General tasks
 ----------------------------------------
 */
 
-function handleError(error) {
+async function handleError(error) {
   log(error.message);
   return this.emit("end");
 }
 
-function logVersion() {
+async function logVersion() {
   log(colorBlue, `uswds.version: ${settings.version}`);
   return Promise.resolve('logged version');
 }
 
-function buildSass() {
+async function buildSass() {
   let uswdsPath = "uswds"
   if (settings.version === 3) {
     uswdsPath = "@uswds/uswds";
@@ -173,7 +173,7 @@ function buildSass() {
   );
 }
 
-function watchSass() {
+async function watchSass() {
   return watch(
     [
       `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"), 
@@ -181,7 +181,7 @@ function watchSass() {
     ], buildSass);
 };
 
-function buildSprite() {
+async function buildSprite() {
   const config = {
     shape: {
       dimension: {
@@ -210,7 +210,7 @@ function buildSprite() {
     .pipe(dest(`${paths.dist.img}`));
 }
 
-function renameSprite() {
+async function renameSprite() {
   return src(`${paths.dist.img}/symbol/svg/sprite.symbol.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
@@ -218,7 +218,7 @@ function renameSprite() {
     .pipe(dest(`./`));
 }
 
-function cleanSprite() {
+async function cleanSprite() {
   return del(`${paths.dist.img}/symbol`.replaceAll("//", "/"));
 }
 
