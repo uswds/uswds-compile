@@ -3,7 +3,7 @@ const csso = require("postcss-csso");
 const { src, dest, series, parallel, watch } = require("gulp");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
-const sass = require("gulp-sass")(require("sass-embedded"));
+const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require("gulp-sourcemaps");
 const del = require("del");
 const svgSprite = require("gulp-svg-sprite");
@@ -119,17 +119,17 @@ General tasks
 ----------------------------------------
 */
 
-async function handleError(error) {
+function handleError(error) {
   log(error.message);
   return this.emit("end");
 }
 
-async function logVersion() {
+function logVersion() {
   log(colorBlue, `uswds.version: ${settings.version}`);
   return Promise.resolve('logged version');
 }
 
-async function buildSass() {
+function buildSass() {
   let uswdsPath = "uswds"
   if (settings.version === 3) {
     uswdsPath = "@uswds/uswds";
@@ -163,7 +163,7 @@ async function buildSass() {
     src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
       .pipe(sourcemaps.init({ largeFile: true }))
       .pipe(
-        sass({ includePaths: buildSettings.includes })
+        sass.sync({ includePaths: buildSettings.includes })
           .on("error", handleError)
       )
       .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
@@ -173,7 +173,7 @@ async function buildSass() {
   );
 }
 
-async function watchSass() {
+function watchSass() {
   return watch(
     [
       `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"), 
@@ -181,7 +181,7 @@ async function watchSass() {
     ], buildSass);
 };
 
-async function buildSprite() {
+function buildSprite() {
   const config = {
     shape: {
       dimension: {
@@ -210,7 +210,7 @@ async function buildSprite() {
     .pipe(dest(`${paths.dist.img}`));
 }
 
-async function renameSprite() {
+function renameSprite() {
   return src(`${paths.dist.img}/symbol/svg/sprite.symbol.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
@@ -218,7 +218,7 @@ async function renameSprite() {
     .pipe(dest(`./`));
 }
 
-async function cleanSprite() {
+function cleanSprite() {
   return del(`${paths.dist.img}/symbol`.replaceAll("//", "/"));
 }
 
