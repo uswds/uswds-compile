@@ -160,7 +160,11 @@ function buildSass() {
   };
 
   return (
-    src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
+    src(
+      [
+        `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"), 
+        `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/")
+      ])
       .pipe(sourcemaps.init({ largeFile: true }))
       .pipe(
         sass({ includePaths: buildSettings.includes })
