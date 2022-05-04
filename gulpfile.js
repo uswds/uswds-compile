@@ -135,7 +135,7 @@ function buildSass() {
     uswdsPath = "@uswds/uswds";
   }
 
-  const pkg = require(`../../${uswdsPath}/package.json`).version;
+  const pkg = require(`./node_modules/${uswdsPath}/package.json`).version;
 
   log(colorBlue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
