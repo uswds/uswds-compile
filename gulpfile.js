@@ -211,7 +211,7 @@ function buildSprite() {
 }
 
 function renameSprite() {
-  return src(`${paths.dist.img}/symbol/svg/sprite.symbol.svg`.replaceAll("//", "/"), {
+  return src(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replaceAll("//", "/")))
@@ -219,7 +219,7 @@ function renameSprite() {
 }
 
 function cleanSprite() {
-  return del(`${paths.dist.img}/symbol`.replaceAll("//", "/"));
+  return del(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"));
 }
 
 exports.settings = settings;
