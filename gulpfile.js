@@ -6,7 +6,7 @@ const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const sourcemaps = require("gulp-sourcemaps");
 const del = require("del");
-const svgSprite = require("gulp-svg-sprite");
+const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
 const colorBlue = "\x1b[34m%s\x1b[0m";
@@ -205,7 +205,7 @@ function buildSprite() {
   return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
-    .pipe(svgSprite(config))
+    .pipe(svgSprite())
     .on("error", handleError)
     .pipe(dest(`${paths.dist.img}`));
 }
