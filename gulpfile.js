@@ -182,26 +182,6 @@ function watchSass() {
 };
 
 function buildSprite() {
-  const config = {
-    shape: {
-      dimension: {
-        // Set maximum dimensions
-        maxWidth: settings.sprite.width,
-        maxHeight: settings.sprite.width,
-      },
-      id: {
-        separator: settings.sprite.separator,
-      },
-      spacing: {
-        // Add padding
-        padding: 0,
-      },
-    },
-    mode: {
-      symbol: true, // Activate the «symbol» mode
-    },
-  };
-
   return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
