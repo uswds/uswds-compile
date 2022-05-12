@@ -6,7 +6,7 @@ const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const sourcemaps = require("gulp-sourcemaps");
 const del = require("del");
-const svgSprite = require("gulp-svg-sprite");
+const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
 const colorBlue = "\x1b[34m%s\x1b[0m";
@@ -185,36 +185,16 @@ function watchSass() {
 }
 
 function buildSprite() {
-  const config = {
-    shape: {
-      dimension: {
-        // Set maximum dimensions
-        maxWidth: settings.sprite.width,
-        maxHeight: settings.sprite.width,
-      },
-      id: {
-        separator: settings.sprite.separator,
-      },
-      spacing: {
-        // Add padding
-        padding: 0,
-      },
-    },
-    mode: {
-      symbol: true, // Activate the «symbol» mode
-    },
-  };
-
   return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
-      .pipe(svgSprite(config))
-      .on("error", handleError)
-      .pipe(dest(`${paths.dist.img}`));
+    .pipe(svgSprite())
+    .on("error", handleError)
+    .pipe(dest(`${paths.dist.img}`));
 }
 
 function renameSprite() {
-  return src(`${paths.dist.img}/symbol/svg/sprite.symbol.svg`.replaceAll("//", "/"), {
+  return src(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"), {
     allowEmpty: true,
   })
       .pipe(rename(`${paths.dist.img}/sprite.svg`.replaceAll("//", "/")))
@@ -222,7 +202,7 @@ function renameSprite() {
 }
 
 function cleanSprite() {
-  return del(`${paths.dist.img}/symbol`.replaceAll("//", "/"));
+  return del(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"));
 }
 
 exports.settings = settings;
