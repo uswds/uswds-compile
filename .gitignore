@@ -5,3 +5,5 @@ test/
 path/
 *.tgz
 .idea/
+assets/
+sass/
