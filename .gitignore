@@ -4,5 +4,6 @@ npm-debug.log*
 test/
 path/
 *.tgz
+.idea/
 assets/
 sass/
