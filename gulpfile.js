@@ -12,8 +12,8 @@ const log = console.log;
 const colors = {
   red: "\x1b[31m%s\x1b[0m",
   blue: "\x1b[34m%s\x1b[0m",
-  yellow: "\x1b[33m%s\x1b[0m"
-}
+  yellow: "\x1b[33m%s\x1b[0m",
+};
 
 /*
 ----------------------------------------
@@ -61,6 +61,7 @@ let settings = {
         fonts: "./assets/uswds/fonts",
         js: "./assets/uswds/js",
         css: "./assets/uswds/css",
+        icons: "",
       },
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
@@ -199,16 +200,45 @@ function watchSass() {
     buildSass
   );
 }
-      `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/")
-    ], buildSass);
-};
+
+function getSpritePaths(spritePaths = []) {
+  const defaultSpritePath = `${paths.dist.img}/usa-icons/**/*.svg`.replaceAll(
+    "//",
+    "/"
+  );
+
+  const customSpritePath = paths.dist.icons.length
+    ? `${paths.dist.icons}/**/*.svg`.replaceAll("//", "/")
+    : "";
+
+  if (customSpritePath) {
+    spritePaths.push(customSpritePath);
+
+    if (settings.custom_sprites_only) {
+      return spritePaths;
+    }
+  }
+
+  if (settings.custom_sprites_only && !customSpritePath) {
+    log(
+      colors.yellow,
+      `You've set custom_sprites_only to true, but haven't defined a custom path directory. Using default: "${defaultSpritePath}"`
+    );
+  }
+
+  spritePaths.push(defaultSpritePath);
+
+  return spritePaths;
+}
 
 function buildSprite() {
-  return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
+  const spritePaths = getSpritePaths();
 
+  return src(spritePaths, {
     allowEmpty: true,
   })
     .pipe(svgSprite())
+    .pipe(rename("usa-icons.svg"))
     .on("error", handleError)
     .pipe(dest(`${paths.dist.img}`));
 }
