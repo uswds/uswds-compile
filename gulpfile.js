@@ -9,7 +9,11 @@ const del = require("del");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
-const colorBlue = "\x1b[34m%s\x1b[0m";
+const colors = {
+  red: "\x1b[31m%s\x1b[0m",
+  blue: "\x1b[34m%s\x1b[0m",
+  yellow: "\x1b[33m%s\x1b[0m",
+};
 
 /*
 ----------------------------------------
@@ -96,20 +100,16 @@ USWDS specific tasks
 
 const copy = {
   theme() {
-    log(colorBlue, `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`);
-    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.theme));
+      colors.blue,
   },
   fonts() {
-    log(colorBlue, `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`);
-    return src(`${getSrcFrom("fonts")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.fonts));
+      colors.blue,
   },
   images() {
-    log(colorBlue, `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`);
-    return src(`${getSrcFrom("img")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.img));
+      colors.blue,
   },
   js() {
-    log(colorBlue, `Copy USWDS compiled JS: ${getSrcFrom("js")} →  ${paths.dist.js}`);
-    return src(`${getSrcFrom("js")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.js));
+      colors.blue,
   },
 };
 
@@ -125,7 +125,7 @@ function handleError(error) {
 }
 
 function logVersion() {
-  log(colorBlue, `uswds.version: ${settings.version}`);
+  log(colors.blue, `uswds.version: ${settings.version}`);
   return Promise.resolve('logged version');
 }
 
@@ -137,7 +137,7 @@ function buildSass() {
 
   const pkg = require(`../../${uswdsPath}/package.json`).version;
 
-  log(colorBlue, `Compiling with USWDS ${pkg}`);
+  log(colors.blue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
     plugins: [
       autoprefixer({
