@@ -110,8 +110,7 @@ Function | Description
 `updateUswds` | `copyAssets` + `compile`
 `watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.theme` and `paths.src.projectSass`
 
-
-## Running the compile functions
+### Running the compile functions
 For any function you defined as an `export` in your `gulpfile.js` you can run `npx gulp [function]`
 
 For example, if you have the following `gulpfile.js`:
@@ -134,20 +133,6 @@ With that setup, you could do the following in the terminal:
 - **Watch for changes and recompile:** `npx gulp watch`
 - **Initialize a new project:** `npx gulp init`
 - **Update USWDS static assets and recompile:** `npx gulp update`
-
----
-
-### Autoprefixer
-We use Autoprefixer for maximum browser compatibility. We target the the following browsers. When you compile with the USWDS compiler, we will apply Autoprefixer to all compiled code.
-
-```bash
-> 2%
-last 2 versions
-IE 11
-not dead
-```
-
----
 
 ### Updating the USWDS icon sprite
 
@@ -175,5 +160,17 @@ After running either `init` or `copyAssets`, you'll find USWDS images in the `pa
     uswds.sprite.projectOnly = true;
     ```
 1. Run either the `compile` or the `compileIcons` function to compile a new sprite. This sprite will include only the new project icons.
+
+## Autoprefixer
+We use Autoprefixer for maximum browser compatibility. We target the the following browsers. When you compile with the USWDS compiler, we will apply Autoprefixer to all compiled code.
+
+```bash
+> 2%
+last 2 versions
+IE 11
+not dead
+```
+
+---
 
 :rocket:
