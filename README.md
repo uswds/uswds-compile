@@ -83,11 +83,13 @@ Setting | Default | Description
 `paths.src.img` | `2`: `"./node_modules/uswds/dist/img"`<br />`3`: `"./node_modules/@uswds/uswds/dist/img"` | Source location of the USWDS images
 `paths.src.js` | `2`: `"./node_modules/uswds/dist/js"`<br />`3`: `"./node_modules/@uswds/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
 `paths.src.projectSass` | `"./sass"` | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
+`paths.src.projectIcons` | `""` | Source location of any additional project icons to include in the icon sprite. (Use _only_ these project icons in the sprite by setting `sprite.projectOnly` to `true`.)
 `paths.dist.theme` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
 `paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
 `paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
 `paths.dist.js` | `"./assets/uswds/js"` | Project destination for compiled JavaScript
 `paths.dist.css` | `"./assets/uswds/css"` | Project destination for compiled CSS
+`sprite.projectOnly` | `"./assets/uswds/css"` | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite. 
 
 ### Functions
 Export USWDS Compile functions in your project's `gulpfile.js` to use them in your project.
@@ -151,6 +153,27 @@ not dead
 
 After running either `init` or `copyAssets`, you'll find USWDS images in the `paths.dist.img` directory. Any icon SVG file in `usa-icons` directory within the `paths.dist.img` directory will compile into the icon sprite when running the `compileIcons` function.
 
-We'll be updating and improving the icon workflow in subsequent releases.
+#### Add icons to the icon sprite
+
+1. Create a directory for the new icons anywhere in your project
+1. Add icons (typically from either `uswds-icons` or `material-icons`) to this directory.  **These icons will be added to the default USWDS icons in the sprite.**
+1. In your project Gulpfile, set `uswds.paths.src.projectIcons` to this new directory. For example
+    ```js
+    uswds.paths.src.projectIcons = "./assets/img/my-icons";
+    ```
+1. Run either the `compile` or the `compileIcons` function to compile a new sprite. This sprite includes the USWDS default icons and the new project icons.
+
+#### Use only project icons in the icon sprite
+1. Create a directory for the new icons anywhere in your project
+1. Add icons (typically from either `usa-icons`, `uswds-icons`, or `material-icons`) to this directory. **These will be the only icons included in the sprite.**
+1. In your project Gulpfile, set `uswds.paths.src.projectIcons` to this new directory. For example
+    ```js
+    uswds.paths.src.projectIcons = "./assets/img/my-icons";
+    ```
+1. In your project Gulpfile, set `uswds.sprite.projectOnly` to `true`. For example
+    ```js
+    uswds.sprite.projectOnly = true;
+    ```
+1. Run either the `compile` or the `compileIcons` function to compile a new sprite. This sprite will include only the new project icons.
 
 :rocket:
