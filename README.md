@@ -83,13 +83,13 @@ Setting | Default | Description
 `paths.src.img` | `2`: `"./node_modules/uswds/dist/img"`<br />`3`: `"./node_modules/@uswds/uswds/dist/img"` | Source location of the USWDS images
 `paths.src.js` | `2`: `"./node_modules/uswds/dist/js"`<br />`3`: `"./node_modules/@uswds/uswds/dist/js"` | Source location of the USWDS compiled JavaScript files
 `paths.src.projectSass` | `"./sass"` | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.
-`paths.src.projectIcons` | `""` | Source location of any additional project icons to include in the icon sprite. (Use _only_ these project icons in the sprite by setting `sprite.projectOnly` to `true`.)
+`paths.src.projectIcons` | `""` | Source location of any additional project icons to include in the icon sprite. (Use _only_ these project icons in the sprite by setting `sprite.projectIconsOnly` to `true`.)
 `paths.dist.theme` | `"./sass"` | Project destination for theme files (Sass entry point and settings)
 `paths.dist.img` | `"./assets/uswds/images"` | Project destination for images
 `paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
 `paths.dist.js` | `"./assets/uswds/js"` | Project destination for compiled JavaScript
 `paths.dist.css` | `"./assets/uswds/css"` | Project destination for compiled CSS
-`sprite.projectOnly` | `"./assets/uswds/css"` | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite. 
+`sprite.projectIconsOnly` | `"./assets/uswds/css"` | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite. 
 
 ### Functions
 Export USWDS Compile functions in your project's `gulpfile.js` to use them in your project.
@@ -155,9 +155,9 @@ After running either `init` or `copyAssets`, you'll find USWDS images in the `pa
     ```js
     uswds.paths.src.projectIcons = "./assets/img/my-icons";
     ```
-1. In your project Gulpfile, set `uswds.sprite.projectOnly` to `true`. For example
+1. In your project Gulpfile, set `uswds.sprite.projectIconsOnly` to `true`. For example
     ```js
-    uswds.sprite.projectOnly = true;
+    uswds.sprite.projectIconsOnly = true;
     ```
 1. Run either the `compile` or the `compileIcons` function to compile a new sprite. This sprite will include only the new project icons.
 

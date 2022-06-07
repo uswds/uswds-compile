@@ -70,7 +70,7 @@ let settings = {
     width: 24,
     height: 24,
     separator: "-",
-    projectOnly: false,
+    projectIconsOnly: false,
   },
 };
 
@@ -214,15 +214,15 @@ function getSpritePaths(spritePaths = []) {
   if (customSpritePath) {
     spritePaths.push(customSpritePath);
 
-    if (settings.sprite.projectOnly) {
+    if (settings.sprite.projectIconsOnly) {
       return spritePaths;
     }
   }
 
-  if (settings.sprite.projectOnly && !customSpritePath) {
+  if (settings.sprite.projectIconsOnly && !customSpritePath) {
     log(
       colors.yellow,
-      `You've set sprite.projectOnly to true, but haven't defined a custom project icon path directory (paths.src.projectIcons). Using default: "${defaultSpritePath}"`
+      `You've set sprite.projectIconsOnly to true, but haven't defined a custom project icon path directory (paths.src.projectIcons). Using default: "${defaultSpritePath}"`
     );
   }
 
