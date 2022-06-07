@@ -32,6 +32,7 @@ let settings = {
         img: null,
         js: null,
         projectSass: "./sass",
+        projectIcons: "",
         defaults: {
           v2: {
             uswds: "./node_modules/uswds/dist",
@@ -61,16 +62,15 @@ let settings = {
         fonts: "./assets/uswds/fonts",
         js: "./assets/uswds/js",
         css: "./assets/uswds/css",
-        icons: "",
       },
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
   },
-  custom_sprites_only: false,
   sprite: {
     width: 24,
     height: 24,
     separator: "-",
+    projectOnly: false,
   },
 };
 
@@ -207,22 +207,22 @@ function getSpritePaths(spritePaths = []) {
     "/"
   );
 
-  const customSpritePath = paths.dist.icons.length
-    ? `${paths.dist.icons}/**/*.svg`.replaceAll("//", "/")
+  const customSpritePath = paths.src.projectIcons.length
+    ? `${paths.src.projectIcons}/**/*.svg`.replaceAll("//", "/")
     : "";
 
   if (customSpritePath) {
     spritePaths.push(customSpritePath);
 
-    if (settings.custom_sprites_only) {
+    if (settings.sprite.projectOnly) {
       return spritePaths;
     }
   }
 
-  if (settings.custom_sprites_only && !customSpritePath) {
+  if (settings.sprite.projectOnly && !customSpritePath) {
     log(
       colors.yellow,
-      `You've set custom_sprites_only to true, but haven't defined a custom path directory. Using default: "${defaultSpritePath}"`
+      `You've set sprite.projectOnly to true, but haven't defined a custom project icon path directory (paths.src.projectIcons). Using default: "${defaultSpritePath}"`
     );
   }
 
@@ -257,6 +257,7 @@ function cleanSprite() {
 
 exports.settings = settings;
 exports.paths = paths;
+exports.sprite = settings.sprite;
 exports.copyTheme = copy.theme;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
