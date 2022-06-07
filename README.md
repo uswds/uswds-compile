@@ -109,7 +109,7 @@ Function | Description
 `watch` | Compiles, then recompiles when there are changes to Sass files in `paths.dist.theme` and `paths.src.projectSass`
 
 
-## Running the compile functions
+### Running the compile functions
 For any function you defined as an `export` in your `gulpfile.js` you can run `npx gulp [function]`
 
 For example, if you have the following `gulpfile.js`:
@@ -133,7 +133,7 @@ With that setup, you could do the following in the terminal:
 - **Initialize a new project:** `npx gulp init`
 - **Update USWDS static assets and recompile:** `npx gulp update`
 
-## Usage tips
+### Usage tips
 - **Use `init` only once.** The `init` task is meant for initializing the design system on a project. Since it will overwrite project files (like settings files and the Sass entry point), use it sparingly and don't use it for updating the design system on a project, or at any point after you've customized your settings fies.  
 - **Update USWDS assets with `copyAssets`.** Don't update assets with `init`, use the `copyAssets` task. This task updates static assets (like images, fonts, and compiled JavaScript) only and you don't risk clobbering your customizations.
 - **Compile only from a single Sass entry point.** Define the location of this entry point in `paths.dist.theme`. Point to any other Sass file you need from this single entry point. If you have project Sass files outside the `paths.dist.theme` directory that you'd like to watch, you can set this location with `paths.src.projectSass`, but the Sass will still compile from the single entry point located in `paths.dist.theme`.
