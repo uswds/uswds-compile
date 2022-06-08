@@ -89,7 +89,7 @@ Setting | Default | Description
 `paths.dist.fonts` | `"./assets/uswds/fonts"` | Project destination for fonts
 `paths.dist.js` | `"./assets/uswds/js"` | Project destination for compiled JavaScript
 `paths.dist.css` | `"./assets/uswds/css"` | Project destination for compiled CSS
-`sprite.projectIconsOnly` | `"./assets/uswds/css"` | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite. 
+`sprite.projectIconsOnly` | `false` | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite. 
 
 ### Functions
 Export USWDS Compile functions in your project's `gulpfile.js` to use them in your project.
