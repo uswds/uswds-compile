@@ -9,7 +9,11 @@ const del = require("del");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
-const colorBlue = "\x1b[34m%s\x1b[0m";
+const colors = {
+  red: "\x1b[31m%s\x1b[0m",
+  blue: "\x1b[34m%s\x1b[0m",
+  yellow: "\x1b[33m%s\x1b[0m",
+};
 
 /*
 ----------------------------------------
@@ -28,6 +32,7 @@ let settings = {
         img: null,
         js: null,
         projectSass: "./sass",
+        projectIcons: "",
         defaults: {
           v2: {
             uswds: "./node_modules/uswds/dist",
@@ -35,7 +40,7 @@ let settings = {
             theme: "./node_modules/uswds/dist/scss/theme",
             fonts: "./node_modules/uswds/dist/fonts",
             img: "./node_modules/uswds/dist/img",
-            js: "./node_modules/uswds/dist/js",    
+            js: "./node_modules/uswds/dist/js",
           },
           v3: {
             uswds: "./node_modules/@uswds",
@@ -44,8 +49,8 @@ let settings = {
             fonts: "./node_modules/@uswds/uswds/dist/fonts",
             img: "./node_modules/@uswds/uswds/dist/img",
             js: "./node_modules/@uswds/uswds/dist/js",
-          }
-        }
+          },
+        },
       },
       /**
        * ? project paths
@@ -59,19 +64,15 @@ let settings = {
         css: "./assets/uswds/css",
       },
     },
-    browserslist: [
-      "> 2%",
-      "last 2 versions",
-      "IE 11",
-      "not dead"
-    ],
+    browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
   },
   sprite: {
     width: 24,
     height: 24,
     separator: "-",
-  }
-}
+    projectIconsOnly: false,
+  },
+};
 
 let paths = settings.compile.paths;
 
@@ -80,7 +81,7 @@ let getSrcFrom = (key) => {
     return paths.src[key];
   }
   return paths.src.defaults[`v${settings.version}`][key];
-}
+};
 
 /*
 ----------------------------------------
@@ -96,20 +97,40 @@ USWDS specific tasks
 
 const copy = {
   theme() {
-    log(colorBlue, `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`);
-    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.theme));
+    log(
+      colors.blue,
+      `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`
+    );
+    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(
+      dest(paths.dist.theme)
+    );
   },
   fonts() {
-    log(colorBlue, `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`);
-    return src(`${getSrcFrom("fonts")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.fonts));
+    log(
+      colors.blue,
+      `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`
+    );
+    return src(`${getSrcFrom("fonts")}/**/**`.replaceAll("//", "/")).pipe(
+      dest(paths.dist.fonts)
+    );
   },
   images() {
-    log(colorBlue, `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`);
-    return src(`${getSrcFrom("img")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.img));
+    log(
+      colors.blue,
+      `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`
+    );
+    return src(`${getSrcFrom("img")}/**/**`.replaceAll("//", "/")).pipe(
+      dest(paths.dist.img)
+    );
   },
   js() {
-    log(colorBlue, `Copy USWDS compiled JS: ${getSrcFrom("js")} →  ${paths.dist.js}`);
-    return src(`${getSrcFrom("js")}/**/**`.replaceAll("//", "/")).pipe(dest(paths.dist.js));
+    log(
+      colors.blue,
+      `Copy USWDS compiled JS: ${getSrcFrom("js")} →  ${paths.dist.js}`
+    );
+    return src(`${getSrcFrom("js")}/**/**`.replaceAll("//", "/")).pipe(
+      dest(paths.dist.js)
+    );
   },
 };
 
@@ -125,67 +146,99 @@ function handleError(error) {
 }
 
 function logVersion() {
-  log(colorBlue, `uswds.version: ${settings.version}`);
-  return Promise.resolve('logged version');
+  log(colors.blue, `uswds.version: ${settings.version}`);
+  return Promise.resolve("logged version");
 }
 
 function buildSass() {
-  let uswdsPath = "uswds"
+  let uswdsPath = "uswds";
   if (settings.version === 3) {
     uswdsPath = "@uswds/uswds";
   }
 
   const pkg = require(`../../${uswdsPath}/package.json`).version;
 
-  log(colorBlue, `Compiling with USWDS ${pkg}`);
+  log(colors.blue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
     plugins: [
       autoprefixer({
         cascade: false,
         grid: true,
-        overrideBrowserslist: settings.compile.browserslist
+        overrideBrowserslist: settings.compile.browserslist,
       }),
       csso({ forceMediaMerge: false }),
     ],
     includes: [
       // 1. local theme files
-      paths.dist.theme, 
+      paths.dist.theme,
       // 2. uswds organization directory (npm packages)
       getSrcFrom("uswds"),
       // 3. v2 packages directory
       `${getSrcFrom("sass")}/packages`.replaceAll("//", "/"),
       // 4. local uswds package
-      getSrcFrom("sass")
+      getSrcFrom("sass"),
     ],
   };
 
-  return (
-    src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
-      .pipe(sourcemaps.init({ largeFile: true }))
-      .pipe(
-        sass({ includePaths: buildSettings.includes })
-          .on("error", handleError)
-      )
-      .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
-      .pipe(postcss(buildSettings.plugins))
-      .pipe(sourcemaps.write("."))
-      .pipe(dest(paths.dist.css))
-  );
+  return src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
+    .pipe(sourcemaps.init({ largeFile: true }))
+    .pipe(
+      sass({ includePaths: buildSettings.includes }).on("error", handleError)
+    )
+    .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
+    .pipe(postcss(buildSettings.plugins))
+    .pipe(sourcemaps.write("."))
+    .pipe(dest(paths.dist.css));
 }
 
 function watchSass() {
   return watch(
     [
-      `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"), 
-      `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/")
-    ], buildSass);
-};
+      `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"),
+      `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/"),
+    ],
+    buildSass
+  );
+}
+
+function getSpritePaths(spritePaths = []) {
+  const defaultSpritePath = `${paths.dist.img}/usa-icons/**/*.svg`.replaceAll(
+    "//",
+    "/"
+  );
+
+  const customSpritePath = paths.src.projectIcons.length
+    ? `${paths.src.projectIcons}/**/*.svg`.replaceAll("//", "/")
+    : "";
+
+  if (customSpritePath) {
+    spritePaths.push(customSpritePath);
+
+    if (settings.sprite.projectIconsOnly) {
+      return spritePaths;
+    }
+  }
+
+  if (settings.sprite.projectIconsOnly && !customSpritePath) {
+    log(
+      colors.yellow,
+      `You've set sprite.projectIconsOnly to true, but haven't defined a custom project icon path directory (paths.src.projectIcons). Using default: "${defaultSpritePath}"`
+    );
+  }
+
+  spritePaths.push(defaultSpritePath);
+
+  return spritePaths;
+}
 
 function buildSprite() {
-  return src(`${paths.dist.img}/usa-icons/**/*.svg`.replaceAll("//", "/"), {
+  const spritePaths = getSpritePaths();
+
+  return src(spritePaths, {
     allowEmpty: true,
   })
     .pipe(svgSprite())
+    .pipe(rename("usa-icons.svg"))
     .on("error", handleError)
     .pipe(dest(`${paths.dist.img}`));
 }
@@ -204,32 +257,17 @@ function cleanSprite() {
 
 exports.settings = settings;
 exports.paths = paths;
+exports.sprite = settings.sprite;
 exports.copyTheme = copy.theme;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
 exports.copyJS = copy.js;
-exports.copyAssets = series(
-  copy.fonts,
-  copy.images,
-  copy.js
-);
-exports.copyAll = series(
-  copy.theme,
-  this.copyAssets
-);
+exports.copyAssets = series(copy.fonts, copy.images, copy.js);
+exports.copyAll = series(copy.theme, this.copyAssets);
 exports.compileSass = series(logVersion, buildSass);
 exports.compileIcons = series(buildSprite, renameSprite, cleanSprite);
-exports.compile = series(
-  logVersion, 
-  parallel(
-    buildSass,
-    this.compileIcons
-  )
-);
-exports.updateUswds = series(
-  this.copyAssets,
-  this.compile
-);
+exports.compile = series(logVersion, parallel(buildSass, this.compileIcons));
+exports.updateUswds = series(this.copyAssets, this.compile);
 
 exports.init = series(logVersion, this.copyAll, this.compile);
 exports.watch = series(logVersion, buildSass, watchSass);
