@@ -1,6 +1,6 @@
 name: Bug Report 🐞
-description: Report a bug and help USWDS improve.
-title: "USWDS - Bug: [YOUR TITLE]"
+description: Report a bug and help USWDS Compile improve.
+title: "USWDS-Compile - Bug: [YOUR TITLE]"
 labels: ['Type: Bug','Status: Triage','Needs: Confirmation']
 body:
   - type: textarea
@@ -47,8 +47,9 @@ body:
     id: system
     attributes:
       label: System setup
-      description: Provide your system details. Be sure to include your USWDS version, device, operating system, and browser (with version).
+      description: Provide your system details. Be sure to include your USWDS Compile and USWDS versions, device, operating system, and browser (with version).
       placeholder: |
+        - USWDS Compile version:
         - USWDS version:
         - Device:
         - Operating system:
@@ -74,6 +75,6 @@ body:
           required: true
         - label:
             I checked the [current
-              issues](https://github.com/uswds/uswds/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Bug%22) for
+              issues](https://github.com/uswds/uswds-compile/issues) for
               duplicate bug reports.
           required: true
