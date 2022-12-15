@@ -101,7 +101,7 @@ const copy = {
       colors.blue,
       `Copy USWDS theme files: ${getSrcFrom("theme")} → ${paths.dist.theme}`
     );
-    return src(`${getSrcFrom("theme")}/**/**`.replaceAll("//", "/")).pipe(
+    return src(`${getSrcFrom("theme")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.theme)
     );
   },
@@ -110,7 +110,7 @@ const copy = {
       colors.blue,
       `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`
     );
-    return src(`${getSrcFrom("fonts")}/**/**`.replaceAll("//", "/")).pipe(
+    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.fonts)
     );
   },
@@ -119,7 +119,7 @@ const copy = {
       colors.blue,
       `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`
     );
-    return src(`${getSrcFrom("img")}/**/**`.replaceAll("//", "/")).pipe(
+    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.img)
     );
   },
@@ -128,7 +128,7 @@ const copy = {
       colors.blue,
       `Copy USWDS compiled JS: ${getSrcFrom("js")} →  ${paths.dist.js}`
     );
-    return src(`${getSrcFrom("js")}/**/**`.replaceAll("//", "/")).pipe(
+    return src(`${getSrcFrom("js")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.js)
     );
   },
@@ -174,13 +174,13 @@ function buildSass() {
       // 2. uswds organization directory (npm packages)
       getSrcFrom("uswds"),
       // 3. v2 packages directory
-      `${getSrcFrom("sass")}/packages`.replaceAll("//", "/"),
+      `${getSrcFrom("sass")}/packages`.replace("//", "/"),
       // 4. local uswds package
       getSrcFrom("sass"),
     ],
   };
 
-  return src([`${paths.dist.theme}/*.scss`.replaceAll("//", "/")])
+  return src([`${paths.dist.theme}/*.scss`.replace("//", "/")])
     .pipe(sourcemaps.init({ largeFile: true }))
     .pipe(
       sass({ includePaths: buildSettings.includes }).on("error", handleError)
@@ -194,21 +194,21 @@ function buildSass() {
 function watchSass() {
   return watch(
     [
-      `${paths.dist.theme}/**/*.scss`.replaceAll("//", "/"),
-      `${paths.src.projectSass}/**/*.scss`.replaceAll("//", "/"),
+      `${paths.dist.theme}/**/*.scss`.replace("//", "/"),
+      `${paths.src.projectSass}/**/*.scss`.replace("//", "/"),
     ],
     buildSass
   );
 }
 
 function getSpritePaths(spritePaths = []) {
-  const defaultSpritePath = `${paths.dist.img}/usa-icons/**/*.svg`.replaceAll(
+  const defaultSpritePath = `${paths.dist.img}/usa-icons/**/*.svg`.replace(
     "//",
     "/"
   );
 
   const customSpritePath = paths.src.projectIcons.length
-    ? `${paths.src.projectIcons}/**/*.svg`.replaceAll("//", "/")
+    ? `${paths.src.projectIcons}/**/*.svg`.replace("//", "/")
     : "";
 
   if (customSpritePath) {
@@ -244,15 +244,15 @@ function buildSprite() {
 }
 
 function renameSprite() {
-  return src(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"), {
+  return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
   })
-    .pipe(rename(`${paths.dist.img}/sprite.svg`.replaceAll("//", "/")))
+    .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));
 }
 
 function cleanSprite() {
-  return del(`${paths.dist.img}/usa-icons.svg`.replaceAll("//", "/"));
+  return del(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"));
 }
 
 exports.settings = settings;
