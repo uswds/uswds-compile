@@ -40,5 +40,8 @@
   "devDependencies": {
     "@uswds/uswds": "^3.3.0",
     "uswds": "^2.13.3"
+  },
+  "overrides": {
+    "glob-parent": "6.0.2"
   }
 }
