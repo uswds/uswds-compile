@@ -43,8 +43,6 @@
   },
   "overrides": {
     "glob-parent": "6.0.2",
-    "gulp": {
-      "unset-value": "2.0.1"
-    }
+    "unset-value": "2.0.1"
   }
 }
