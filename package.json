@@ -42,6 +42,9 @@
     "uswds": "^2.13.3"
   },
   "overrides": {
-    "glob-parent": "6.0.2"
+    "glob-parent": "6.0.2",
+    "gulp": {
+      "unset-value": "2.0.1"
+    }
   }
 }
