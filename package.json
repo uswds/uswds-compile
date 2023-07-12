@@ -33,12 +33,12 @@
     "gulp-sass": "5.1.0",
     "gulp-sourcemaps": "3.0.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "8.4.23",
+    "postcss": "8.4.25",
     "postcss-csso": "6.0.1",
-    "sass-embedded": "1.62.0"
+    "sass-embedded": "1.63.6"
   },
   "devDependencies": {
-    "@uswds/uswds": "^3.4.1",
+    "@uswds/uswds": "^3.5.0",
     "uswds": "^2.14.0"
   },
   "overrides": {
