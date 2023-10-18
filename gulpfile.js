@@ -1,6 +1,7 @@
 const autoprefixer = require("autoprefixer");
 const csso = require("postcss-csso");
 const { src, dest, series, parallel, watch } = require("gulp");
+const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
@@ -150,13 +151,23 @@ function logVersion() {
   return Promise.resolve("logged version");
 }
 
+function getUswdsVersion() {
+  let uswdsPackage = "uswds";
+  if (settings.version === 3) {
+    uswdsPackage = "@uswds/uswds";
+  }
+  const packagePath = path.join(path.dirname(require.resolve(uswdsPackage)), '../../');
+  const version = require(`${packagePath}/package.json`).version;
+  return version;
+}
+
 function buildSass() {
   let uswdsPath = "uswds";
   if (settings.version === 3) {
     uswdsPath = "@uswds/uswds";
   }
 
-  const pkg = require(`../../${uswdsPath}/package.json`).version;
+  const pkg = getUswdsVersion();
 
   log(colors.blue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
