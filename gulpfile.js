@@ -162,11 +162,6 @@ function getUswdsVersion() {
 }
 
 function buildSass() {
-  let uswdsPath = "uswds";
-  if (settings.version === 3) {
-    uswdsPath = "@uswds/uswds";
-  }
-
   const pkg = getUswdsVersion();
 
   log(colors.blue, `Compiling with USWDS ${pkg}`);
