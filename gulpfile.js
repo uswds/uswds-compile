@@ -183,7 +183,10 @@ function buildSass() {
   return src([`${paths.dist.theme}/*.scss`.replace("//", "/")])
     .pipe(sourcemaps.init({ largeFile: true }))
     .pipe(
-      sass({ includePaths: buildSettings.includes }).on("error", handleError)
+      sass({
+        outputStyle: "compressed",
+        includePaths: buildSettings.includes,
+      }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
     .pipe(postcss(buildSettings.plugins))
