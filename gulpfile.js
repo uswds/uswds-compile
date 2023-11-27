@@ -1,6 +1,7 @@
 const autoprefixer = require("autoprefixer");
 const csso = require("postcss-csso");
 const { src, dest, series, parallel, watch } = require("gulp");
+const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
@@ -150,13 +151,18 @@ function logVersion() {
   return Promise.resolve("logged version");
 }
 
-function buildSass() {
-  let uswdsPath = "uswds";
+function getUswdsVersion() {
+  let uswdsPackage = "uswds";
   if (settings.version === 3) {
-    uswdsPath = "@uswds/uswds";
+    uswdsPackage = "@uswds/uswds";
   }
+  const packagePath = path.join(path.dirname(require.resolve(uswdsPackage)), '../../');
+  const version = require(`${packagePath}/package.json`).version;
+  return version;
+}
 
-  const pkg = require(`../../${uswdsPath}/package.json`).version;
+function buildSass() {
+  const pkg = getUswdsVersion();
 
   log(colors.blue, `Compiling with USWDS ${pkg}`);
   const buildSettings = {
@@ -183,7 +189,10 @@ function buildSass() {
   return src([`${paths.dist.theme}/*.scss`.replace("//", "/")])
     .pipe(sourcemaps.init({ largeFile: true }))
     .pipe(
-      sass({ includePaths: buildSettings.includes }).on("error", handleError)
+      sass({
+        outputStyle: "compressed",
+        includePaths: buildSettings.includes,
+      }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
     .pipe(postcss(buildSettings.plugins))
