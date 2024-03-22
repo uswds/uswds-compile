@@ -28,7 +28,7 @@ npm install @uswds/compile --save-dev
 
 ### Gulpfile setup
 
-Create a file called `gulpfile.js` at the root of your project (or use an existing Gulpfile if one already exists). It needs to do the following
+Create a file called `gulpfile.js` at the root of your project (or use an existing Gulpfile if one already exists). It needs to do the following:
 
 - Import the `@uswds/compile` package
 - Set any project settings
@@ -146,6 +146,7 @@ With that setup, you could do the following in the terminal:
 - **Update USWDS assets with `copyAssets`.** Don't update assets with `init`, use the `copyAssets` task. This task updates static assets (like images, fonts, and compiled JavaScript) only and you don't risk clobbering your customizations.
 - **Compile only from a single Sass entry point.** Define the location of this entry point with `paths.dist.theme`. If you have project Sass files outside the `paths.dist.theme` directory, load these files into your single entry point via `@forward`, `@use`, or `@import`. To include these project Sass files in your `gulp watch` task, set `paths.src.projectSass` to your project Sass directory. The Sass will still compile from the single entry point located in `paths.dist.theme`.
 - **Only check theme files and custom icons into version control.** You should have a build process that copies static assets like images, fonts, and compiled JavaScript from the `uswds` package. This assures that these assets are up-to-date with whatever version of USWDS you're using. You only need to track your customizations (like settings, theme files, custom icons, and your gulpfile) in version control.
+- **Staying up-to-date with USWDS.** When updating your project's version of USWDS; code won't be copied over until you run the `npx gulp update` command. You can see all of the required changes available on the [USWDS releases](https://github.com/uswds/uswds/releases) page.
 
 ### Updating the USWDS icon sprite
 
