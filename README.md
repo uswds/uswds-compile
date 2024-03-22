@@ -129,7 +129,7 @@ For example, if you have the following `gulpfile.js`:
 exports.compile = uswds.compile;
 exports.watch = uswds.watch;
 exports.init = uswds.init;
-exports.update = uswds.updateUswds;
+exports.updateUswds = uswds.updateUswds;
 exports.default = uswds.watch;
 ```
 
@@ -138,15 +138,14 @@ With that setup, you could do the following in the terminal:
 - **Compile Sass:** `npx gulp compile` or `npx gulp`
 - **Watch for changes and recompile:** `npx gulp watch`
 - **Initialize a new project:** `npx gulp init`
-- **Update USWDS static assets and recompile:** `npx gulp update`
+- **Update USWDS static assets and recompile:** `npx gulp updateUswds`
 
 ### Usage tips
 
 - **Use `init` only once.** The `init` task is meant for initializing the design system on a project. Since it will overwrite project files (like settings files and the Sass entry point), use it sparingly and don't use it for updating the design system on a project, or at any point after you've customized your settings files.
-- **Update USWDS assets with `copyAssets`.** Don't update assets with `init`, use the `copyAssets` task. This task updates static assets (like images, fonts, and compiled JavaScript) only and you don't risk clobbering your customizations.
+- **Staying up-to-date with USWDS.** When updating your project's version of USWDS; code won't be copied over until you run the `npx gulp updateUswds` command. You can see all of the required changes available on the [USWDS releases](https://github.com/uswds/uswds/releases) page. Alternatively, you can run the `copyAssets` task. This task updates static assets (like images, fonts, and compiled JavaScript) only and you don't risk clobbering your customizations.
 - **Compile only from a single Sass entry point.** Define the location of this entry point with `paths.dist.theme`. If you have project Sass files outside the `paths.dist.theme` directory, load these files into your single entry point via `@forward`, `@use`, or `@import`. To include these project Sass files in your `gulp watch` task, set `paths.src.projectSass` to your project Sass directory. The Sass will still compile from the single entry point located in `paths.dist.theme`.
 - **Only check theme files and custom icons into version control.** You should have a build process that copies static assets like images, fonts, and compiled JavaScript from the `uswds` package. This assures that these assets are up-to-date with whatever version of USWDS you're using. You only need to track your customizations (like settings, theme files, custom icons, and your gulpfile) in version control.
-- **Staying up-to-date with USWDS.** When updating your project's version of USWDS; code won't be copied over until you run the `npx gulp update` command. You can see all of the required changes available on the [USWDS releases](https://github.com/uswds/uswds/releases) page.
 
 ### Updating the USWDS icon sprite
 
