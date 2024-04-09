@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/uswds/uswds-compile#readme",
   "dependencies": {
-    "autoprefixer": "10.4.18",
+    "autoprefixer": "10.4.19",
     "del": "6.1.1",
     "gulp": "4.0.2",
     "gulp-postcss": "9.0.1",
@@ -33,9 +33,9 @@
     "gulp-sass": "5.1.0",
     "gulp-sourcemaps": "3.0.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "8.4.35",
+    "postcss": "^8.4.38",
     "postcss-csso": "6.0.1",
-    "sass-embedded": "1.71.1"
+    "sass-embedded": "1.74.1"
   },
   "devDependencies": {
     "@uswds/uswds": "^3.8.0",
