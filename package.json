@@ -35,7 +35,7 @@
     "gulp-svgstore": "9.0.0",
     "postcss": "^8.4.38",
     "postcss-csso": "6.0.1",
-    "sass-embedded": "1.74.1"
+    "sass-embedded": "1.77.0"
   },
   "devDependencies": {
     "@uswds/uswds": "^3.8.0",
