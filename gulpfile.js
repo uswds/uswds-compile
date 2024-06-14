@@ -190,7 +190,7 @@ function buildSass() {
   };
 
   return src([`${paths.dist.theme}/*.scss`.replace("//", "/")], {
-    sourcemaps: settings.compile.sassSourcemaps,
+    sourcemaps: !!settings.compile.sassSourcemaps,
   })
     .pipe(
       sass({
