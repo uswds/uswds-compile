@@ -1,0 +1,30 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-INFLIGHT-6095116:
+    - '*':
+        reason: No available upgrade or patch
+        expires: 2024-06-19T14:39:21.242Z
+        created: 2024-05-20T14:39:21.251Z
+  SNYK-JS-ANSIREGEX-1583908:
+    - '*':
+        reason: Upgrading Gulp causes regression in asset compilation
+        expires: 2024-06-21T14:02:31.969Z
+        created: 2024-05-22T14:02:31.974Z
+  SNYK-JS-BRACES-6838727:
+    - '*':
+        reason: No available upgrade or patch
+        expires: 2024-06-19T14:38:10.435Z
+        created: 2024-05-20T14:38:10.440Z
+  SNYK-JS-MICROMATCH-6838728:
+    - '*':
+        reason: No available upgrade or patch
+        expires: 2024-06-19T14:39:37.460Z
+        created: 2024-05-20T14:39:37.466Z
+  SNYK-JS-POSTCSS-5926692:
+    - '*':
+        reason: No available upgrade or patch
+        expires: 2024-06-19T14:39:55.905Z
+        created: 2024-05-20T14:39:55.911Z
+patch: {}
