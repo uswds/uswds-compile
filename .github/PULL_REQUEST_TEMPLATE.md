@@ -30,7 +30,7 @@ _Provide a one or two sentence summary of the update that can be used in the rel
 <!--
 A successful summary is written in the past tense and includes:
 **A benefit statement.** A description of the update.
-See [USWDS-compille release notes](https://github.com/uswds/uswds-compile/releases) for examples.
+See [USWDS-compile release notes](https://github.com/uswds/uswds-compile/releases) for examples.
 -->
 
 ## Related issue
