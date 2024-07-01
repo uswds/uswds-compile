@@ -120,7 +120,9 @@ const copy = {
       colors.blue,
       `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`
     );
-    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/")).pipe(
+    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(
       dest(paths.dist.img)
     );
   },
