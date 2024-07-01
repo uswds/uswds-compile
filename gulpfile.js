@@ -111,9 +111,9 @@ const copy = {
       colors.blue,
       `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`
     );
-    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/")).pipe(
-      dest(paths.dist.fonts)
-    );
+    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(dest(paths.dist.fonts));
   },
   images() {
     log(
@@ -156,7 +156,10 @@ function getUswdsVersion() {
   if (settings.version === 3) {
     uswdsPackage = "@uswds/uswds";
   }
-  const packagePath = path.join(path.dirname(require.resolve(uswdsPackage)), '../../');
+  const packagePath = path.join(
+    path.dirname(require.resolve(uswdsPackage)),
+    "../../"
+  );
   const version = require(`${packagePath}/package.json`).version;
   return version;
 }
