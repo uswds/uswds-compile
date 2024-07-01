@@ -250,6 +250,7 @@ function buildSprite() {
 
   return src(spritePaths, {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(svgSprite())
     .pipe(rename("usa-icons.svg"))
@@ -260,6 +261,7 @@ function buildSprite() {
 function renameSprite() {
   return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));
