@@ -111,16 +111,18 @@ const copy = {
       colors.blue,
       `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`
     );
-    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/")).pipe(
-      dest(paths.dist.fonts)
-    );
+    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(dest(paths.dist.fonts));
   },
   images() {
     log(
       colors.blue,
       `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`
     );
-    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/")).pipe(
+    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(
       dest(paths.dist.img)
     );
   },
@@ -156,7 +158,10 @@ function getUswdsVersion() {
   if (settings.version === 3) {
     uswdsPackage = "@uswds/uswds";
   }
-  const packagePath = path.join(path.dirname(require.resolve(uswdsPackage)), '../../');
+  const packagePath = path.join(
+    path.dirname(require.resolve(uswdsPackage)),
+    "../../"
+  );
   const version = require(`${packagePath}/package.json`).version;
   return version;
 }
@@ -245,6 +250,7 @@ function buildSprite() {
 
   return src(spritePaths, {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(svgSprite())
     .pipe(rename("usa-icons.svg"))
@@ -255,6 +261,7 @@ function buildSprite() {
 function renameSprite() {
   return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));
