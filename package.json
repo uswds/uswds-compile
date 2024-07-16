@@ -26,13 +26,13 @@
   "dependencies": {
     "autoprefixer": "10.4.19",
     "del": "6.1.1",
-    "gulp": "4.0.2",
+    "gulp": "5.0.0",
     "gulp-postcss": "9.0.1",
     "gulp-rename": "2.0.0",
     "gulp-replace": "1.1.4",
     "gulp-sass": "5.1.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "postcss-csso": "6.0.1",
     "sass-embedded": "1.77.5"
   },
