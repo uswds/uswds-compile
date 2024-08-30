@@ -1,6 +1,6 @@
 # USWDS Compile
 
-Simple [Gulp 4](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
+Simple [Gulp 5](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
 
 ## Requirements
 
