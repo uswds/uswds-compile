@@ -5,7 +5,6 @@ const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
-const sourcemaps = require("gulp-sourcemaps");
 const del = require("del");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
@@ -66,6 +65,7 @@ let settings = {
       },
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
+    sassSourcemaps: true,
   },
   sprite: {
     width: 24,
@@ -111,16 +111,18 @@ const copy = {
       colors.blue,
       `Copy USWDS fonts: ${getSrcFrom("fonts")} → ${paths.dist.fonts}`
     );
-    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/")).pipe(
-      dest(paths.dist.fonts)
-    );
+    return src(`${getSrcFrom("fonts")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(dest(paths.dist.fonts));
   },
   images() {
     log(
       colors.blue,
       `Copy USWDS images: ${getSrcFrom("img")} →  ${paths.dist.img}`
     );
-    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/")).pipe(
+    return src(`${getSrcFrom("img")}/**/**`.replace("//", "/"), {
+      encoding: false,
+    }).pipe(
       dest(paths.dist.img)
     );
   },
@@ -156,7 +158,10 @@ function getUswdsVersion() {
   if (settings.version === 3) {
     uswdsPackage = "@uswds/uswds";
   }
-  const packagePath = path.join(path.dirname(require.resolve(uswdsPackage)), '../../');
+  const packagePath = path.join(
+    path.dirname(require.resolve(uswdsPackage)),
+    "../../"
+  );
   const version = require(`${packagePath}/package.json`).version;
   return version;
 }
@@ -186,8 +191,9 @@ function buildSass() {
     ],
   };
 
-  return src([`${paths.dist.theme}/*.scss`.replace("//", "/")])
-    .pipe(sourcemaps.init({ largeFile: true }))
+  return src([`${paths.dist.theme}/*.scss`.replace("//", "/")], {
+    sourcemaps: !!settings.compile.sassSourcemaps,
+  })
     .pipe(
       sass({
         outputStyle: "compressed",
@@ -196,8 +202,11 @@ function buildSass() {
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
     .pipe(postcss(buildSettings.plugins))
-    .pipe(sourcemaps.write("."))
-    .pipe(dest(paths.dist.css));
+    .pipe(
+      dest(paths.dist.css, {
+        sourcemaps: settings.compile.sassSourcemaps ? "." : undefined,
+      })
+    );
 }
 
 function watchSass() {
@@ -245,6 +254,7 @@ function buildSprite() {
 
   return src(spritePaths, {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(svgSprite())
     .pipe(rename("usa-icons.svg"))
@@ -255,6 +265,7 @@ function buildSprite() {
 function renameSprite() {
   return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
+    encoding: false
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));

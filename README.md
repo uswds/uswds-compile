@@ -1,6 +1,6 @@
 # USWDS Compile
 
-Simple [Gulp 4.0](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
+Simple [Gulp 5](https://gulpjs.com/) functions for copying USWDS static assets and transforming USWDS Sass into browser-readable CSS.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ npm install @uswds/compile --save-dev
 
 ### Gulpfile setup
 
-Create a file called `gulpfile.js` at the root of your project (or use an existing Gulpfile if one already exists). It needs to do the following
+Create a file called `gulpfile.js` at the root of your project (or use an existing Gulpfile if one already exists). It needs to do the following:
 
 - Import the `@uswds/compile` package
 - Set any project settings
@@ -78,22 +78,29 @@ USWDS is changing its file structure and package naming convention starting with
 
 Use path settings to customize where USWDS Compile looks for USWDS source and outputs processed files. **The value of the default may depend on the USWDS version you've defined in `settings.version`.** When applicable, the relevant value of `settings.version` precedes the default.
 
-| Setting                   | Default                                                                                            | Description                                                                                                                                                                   |
-| ------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `paths.src.uswds`         | `2`: `"./node_modules/uswds/dist"`<br />`3`: `"./node_modules/@uswds"`                             | Source location of the `uswds` package                                                                                                                                        |
-| `paths.src.sass`          | `2`: `"./node_modules/uswds/dist/scss"`<br />`3`: `"./node_modules/@uswds/uswds/packages"`         | Source location of the USWDS Sass                                                                                                                                             |
-| `paths.src.theme`         | `2`: `"./node_modules/uswds/dist/scss/theme"`<br />`3`: `"./node_modules/@uswds/uswds/dist/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)                                                                                        |
-| `paths.src.fonts`         | `2`: `"./node_modules/uswds/dist/fonts"`<br />`3`: `"./node_modules/@uswds/uswds/dist/fonts"`      | Source location of the USWDS fonts                                                                                                                                            |
-| `paths.src.img`           | `2`: `"./node_modules/uswds/dist/img"`<br />`3`: `"./node_modules/@uswds/uswds/dist/img"`          | Source location of the USWDS images                                                                                                                                           |
-| `paths.src.js`            | `2`: `"./node_modules/uswds/dist/js"`<br />`3`: `"./node_modules/@uswds/uswds/dist/js"`            | Source location of the USWDS compiled JavaScript files                                                                                                                        |
-| `paths.src.projectSass`   | `"./sass"`                                                                                         | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.                                   |
-| `paths.src.projectIcons`  | `""`                                                                                               | Source location of any additional project icons to include in the icon sprite. (Use _only_ these project icons in the sprite by setting `sprite.projectIconsOnly` to `true`.) |
-| `paths.dist.theme`        | `"./sass"`                                                                                         | Project destination for theme files (Sass entry point and settings)                                                                                                           |
-| `paths.dist.img`          | `"./assets/uswds/images"`                                                                          | Project destination for images                                                                                                                                                |
-| `paths.dist.fonts`        | `"./assets/uswds/fonts"`                                                                           | Project destination for fonts                                                                                                                                                 |
-| `paths.dist.js`           | `"./assets/uswds/js"`                                                                              | Project destination for compiled JavaScript                                                                                                                                   |
-| `paths.dist.css`          | `"./assets/uswds/css"`                                                                             | Project destination for compiled CSS                                                                                                                                          |
-| `sprite.projectIconsOnly` | `false`                                                                                            | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite.                                                                                                      |
+| Setting                  | Default                                                                                            | Description                                                                                                                                                                   |
+| ------------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `paths.src.uswds`        | `2`: `"./node_modules/uswds/dist"`<br />`3`: `"./node_modules/@uswds"`                             | Source location of the `uswds` package                                                                                                                                        |
+| `paths.src.sass`         | `2`: `"./node_modules/uswds/dist/scss"`<br />`3`: `"./node_modules/@uswds/uswds/packages"`         | Source location of the USWDS Sass                                                                                                                                             |
+| `paths.src.theme`        | `2`: `"./node_modules/uswds/dist/scss/theme"`<br />`3`: `"./node_modules/@uswds/uswds/dist/theme"` | Source location of the USWDS theme files (Sass entry point and starter settings files)                                                                                        |
+| `paths.src.fonts`        | `2`: `"./node_modules/uswds/dist/fonts"`<br />`3`: `"./node_modules/@uswds/uswds/dist/fonts"`      | Source location of the USWDS fonts                                                                                                                                            |
+| `paths.src.img`          | `2`: `"./node_modules/uswds/dist/img"`<br />`3`: `"./node_modules/@uswds/uswds/dist/img"`          | Source location of the USWDS images                                                                                                                                           |
+| `paths.src.js`           | `2`: `"./node_modules/uswds/dist/js"`<br />`3`: `"./node_modules/@uswds/uswds/dist/js"`            | Source location of the USWDS compiled JavaScript files                                                                                                                        |
+| `paths.src.projectSass`  | `"./sass"`                                                                                         | Source location of any existing project Sass files outside of `paths.dist.theme`. The `watch` script will watch this directory for changes.                                   |
+| `paths.src.projectIcons` | `""`                                                                                               | Source location of any additional project icons to include in the icon sprite. (Use _only_ these project icons in the sprite by setting `sprite.projectIconsOnly` to `true`.) |
+| `paths.dist.theme`       | `"./sass"`                                                                                         | Project destination for theme files (Sass entry point and settings)                                                                                                           |
+| `paths.dist.img`         | `"./assets/uswds/images"`                                                                          | Project destination for images                                                                                                                                                |
+| `paths.dist.fonts`       | `"./assets/uswds/fonts"`                                                                           | Project destination for fonts                                                                                                                                                 |
+| `paths.dist.js`          | `"./assets/uswds/js"`                                                                              | Project destination for compiled JavaScript                                                                                                                                   |
+| `paths.dist.css`         | `"./assets/uswds/css"`                                                                             | Project destination for compiled CSS                                                                                                                                          |
+
+### Additional settings
+
+| Setting                           | Default                                            | Description                                                                                                                                                                                     |
+| --------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sprite.projectIconsOnly`         | `false`                                            | Include _only_ the icons in `paths.src.projectIcons` in the icon sprite.                                                                                                                        |
+| `settings.compile.browserslist`   | `["> 2%", "last 2 versions", "IE 11", "not dead"]` | Define the [browserslist query](https://github.com/browserslist/browserslist?tab=readme-ov-file#queries) for CSS prefixes generated by [autoprefixer](https://github.com/postcss/autoprefixer). |
+| `settings.compile.sassSourcemaps` | `true`                                             | Include sourcemap when compiling SASS to CSS.                                                                                                                                                   |
 
 ### Functions
 
@@ -129,7 +136,7 @@ For example, if you have the following `gulpfile.js`:
 exports.compile = uswds.compile;
 exports.watch = uswds.watch;
 exports.init = uswds.init;
-exports.update = uswds.updateUswds;
+exports.updateUswds = uswds.updateUswds;
 exports.default = uswds.watch;
 ```
 
@@ -138,12 +145,12 @@ With that setup, you could do the following in the terminal:
 - **Compile Sass:** `npx gulp compile` or `npx gulp`
 - **Watch for changes and recompile:** `npx gulp watch`
 - **Initialize a new project:** `npx gulp init`
-- **Update USWDS static assets and recompile:** `npx gulp update`
+- **Update USWDS static assets and recompile:** `npx gulp updateUswds`
 
 ### Usage tips
 
 - **Use `init` only once.** The `init` task is meant for initializing the design system on a project. Since it will overwrite project files (like settings files and the Sass entry point), use it sparingly and don't use it for updating the design system on a project, or at any point after you've customized your settings files.
-- **Update USWDS assets with `copyAssets`.** Don't update assets with `init`, use the `copyAssets` task. This task updates static assets (like images, fonts, and compiled JavaScript) only and you don't risk clobbering your customizations.
+- **Stay up-to-date with USWDS with `updateUswds`.** When updating your project's version of USWDS, run the `npx gulp updateUswds` command to copy any updated USWDS assets into your project. Alternatively, you can run the `copyAssets` task. These tasks update USWDS static assets (like images, fonts, and compiled JavaScript) and will not override any of your project customizations. These actions might introduce breaking changes, so be sure to check out the related [USWDS releases notes](https://github.com/uswds/uswds/releases) for any additional tasks that must be completed when updating to a new version of USWDS.
 - **Compile only from a single Sass entry point.** Define the location of this entry point with `paths.dist.theme`. If you have project Sass files outside the `paths.dist.theme` directory, load these files into your single entry point via `@forward`, `@use`, or `@import`. To include these project Sass files in your `gulp watch` task, set `paths.src.projectSass` to your project Sass directory. The Sass will still compile from the single entry point located in `paths.dist.theme`.
 - **Only check theme files and custom icons into version control.** You should have a build process that copies static assets like images, fonts, and compiled JavaScript from the `uswds` package. This assures that these assets are up-to-date with whatever version of USWDS you're using. You only need to track your customizations (like settings, theme files, custom icons, and your gulpfile) in version control.
 

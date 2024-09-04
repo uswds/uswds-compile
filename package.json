@@ -1,6 +1,6 @@
 {
   "name": "@uswds/compile",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Gulp-based compiler for USWDS Sass",
   "main": "gulpfile.js",
   "scripts": {
@@ -24,21 +24,20 @@
   },
   "homepage": "https://github.com/uswds/uswds-compile#readme",
   "dependencies": {
-    "autoprefixer": "10.4.16",
+    "autoprefixer": "10.4.20",
     "del": "6.1.1",
-    "gulp": "4.0.2",
+    "gulp": "5.0.0",
     "gulp-postcss": "9.0.1",
     "gulp-rename": "2.0.0",
     "gulp-replace": "1.1.4",
     "gulp-sass": "5.1.0",
-    "gulp-sourcemaps": "3.0.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "8.4.31",
+    "postcss": "8.4.40",
     "postcss-csso": "6.0.1",
-    "sass-embedded": "1.69.5"
+    "sass-embedded": "1.77.8"
   },
   "devDependencies": {
-    "@uswds/uswds": "^3.7.0",
+    "@uswds/uswds": "^3.8.1",
     "uswds": "^2.14.0"
   },
   "overrides": {
