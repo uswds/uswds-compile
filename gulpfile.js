@@ -198,7 +198,7 @@ function buildSass() {
       sass({
         outputStyle: "compressed",
         includePaths: buildSettings.includes,
-        quietDeps: true
+        silenceDeprecations: ["mixed-decls"]
       }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
