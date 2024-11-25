@@ -66,7 +66,7 @@ let settings = {
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
     sassSourcemaps: true,
-    quietSassDeps: false
+    quietSassDeps: true
   },
   sprite: {
     width: 24,
