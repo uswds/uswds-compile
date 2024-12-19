@@ -1,6 +1,6 @@
 {
   "name": "@uswds/compile",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A Gulp-based compiler for USWDS Sass",
   "main": "gulpfile.js",
   "scripts": {
