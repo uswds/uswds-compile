@@ -66,7 +66,7 @@ let settings = {
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
     sassSourcemaps: true,
-    sassDeprecationWarnings: false
+    sassDeprecationWarnings: false,
   },
   sprite: {
     width: 24,
@@ -123,9 +123,7 @@ const copy = {
     );
     return src(`${getSrcFrom("img")}/**/**`.replace("//", "/"), {
       encoding: false,
-    }).pipe(
-      dest(paths.dist.img)
-    );
+    }).pipe(dest(paths.dist.img));
   },
   js() {
     log(
@@ -197,8 +195,8 @@ function buildSass() {
   })
     .pipe(
       sass({
-        outputStyle: "compressed",
-        includePaths: buildSettings.includes,
+        style: "compressed",
+        loadPaths: buildSettings.includes,
         quietDeps: !settings.compile.sassDeprecationWarnings,
       }).on("error", handleError)
     )
@@ -256,7 +254,7 @@ function buildSprite() {
 
   return src(spritePaths, {
     allowEmpty: true,
-    encoding: false
+    encoding: false,
   })
     .pipe(svgSprite())
     .pipe(rename("usa-icons.svg"))
@@ -267,7 +265,7 @@ function buildSprite() {
 function renameSprite() {
   return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
-    encoding: false
+    encoding: false,
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));
