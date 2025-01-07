@@ -1,0 +1,63 @@
+> 2%
+last 2 versions
+IE 11
+not dead2uswds.sprite.projectIconsOnly = true;11uswds.paths.src.projectIcons = "./assets/img/my-icons";uswds.sprite.projectIconsOnly/* gulpfile,js */
+
+...
+
+exports.compile = uswds.compile;
+exports.watch = uswds.watch;
+exports.init = uswds.init;
+exports.updateUswds = uswds.updateUswds;
+exports.default = uswds.watch;uswds.paths.src.projectIconsuswds.watchexports.compileexports.updateUswdsexports.watch/* gulpfile.js */
+
+const uswds = require("@uswds/compile");
+
+/**
+ * USWDS version
+ */
+
+uswds.settings.version = 3;
+
+/**
+ * Path settings
+ * Set as many as you need
+ */
+
+uswds.paths.dist.css = "./assets/css";
+uswds.paths.dist.theme = "./sass";
+
+/**
+ * Exports
+ * Add as many as you need
+ */
+
+exports.init = uswds.init;
+exports.compile = uswds.compile;exports.inituswds.settings.versionexports.defaultuswds.paths.dist.themegulpfile.jsuswds.paths.dist.cssname: NodeJS with Webpack
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      run: |
+        npm install
+        npx webpack
