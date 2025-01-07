@@ -1,4 +1,15 @@
-# Security Policy
+junautogroup:develop> 2%
+last 2 versions
+IE 11
+not dead211uswds.sprite.projectIconsOnly = true;uswds.sprite.projectIconsOnlyuswds.paths.src.projectIcons = "./assets/img/my-icons";uswds.paths.src.projectIcons/* gulpfile,js */
+
+...
+
+exports.compile = uswds.compile;
+exports.watch = uswds.watch;
+exports.init = uswds.init;
+exports.updateUswds = uswds.updateUswds;
+exports.default = uswds.watch;exports.compileexports.watchuswds.watchexports.initexports.updateUswdsexports.default# Security Policy
 
 As a U.S. Government agency, the General Services Administration (GSA) takes
 seriously our responsibility to protect the public's information, including
