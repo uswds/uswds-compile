@@ -4,6 +4,7 @@ const { src, dest, series, parallel, watch } = require("gulp");
 const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
+const { NodePackageImporter } = require("sass-embedded");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const del = require("del");
 const svgSprite = require("gulp-svgstore");
@@ -200,7 +201,7 @@ function buildSass() {
         outputStyle: "compressed",
         includePaths: buildSettings.includes,
         quietDeps: !settings.compile.sassDeprecationWarnings,
-        importers: [new sass.NodePackageImporter()]
+        importers: [new NodePackageImporter()]
       }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
