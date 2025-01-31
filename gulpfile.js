@@ -200,6 +200,7 @@ function buildSass() {
         outputStyle: "compressed",
         includePaths: buildSettings.includes,
         quietDeps: !settings.compile.sassDeprecationWarnings,
+        importers: [new sass.NodePackageImporter()]
       }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
