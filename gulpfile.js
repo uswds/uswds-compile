@@ -66,7 +66,19 @@ let settings = {
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
     sassSourcemaps: true,
-    sassDeprecationWarnings: false,
+    /**
+     * @type {boolean | undefined}
+     * @deprecated Set `sassOptions.quietDeps` instead. */
+    sassDeprecationWarnings: undefined,
+    /**
+     * @type {import('sass-embedded').Options<"async">}
+     * @default
+     * {
+     *   quietDeps: true,
+     *   style: "compressed"
+     * }
+     */
+    sassOptions: {},
   },
   sprite: {
     width: 24,
@@ -176,7 +188,9 @@ function buildSass() {
         grid: true,
         overrideBrowserslist: settings.compile.browserslist,
       }),
-      csso({ forceMediaMerge: false }),
+      ...(settings.compile.sassOptions.style === "expanded"
+        ? []
+        : [csso({ forceMediaMerge: false })]),
     ],
     includes: [
       // 1. local theme files
@@ -196,8 +210,15 @@ function buildSass() {
     .pipe(
       sass({
         style: "compressed",
-        loadPaths: buildSettings.includes,
-        quietDeps: !settings.compile.sassDeprecationWarnings,
+        ...settings.compile.sassOptions,
+        loadPaths: [
+          ...buildSettings.includes,
+          ...(settings.compile.sassOptions.loadPaths ?? []),
+        ],
+        quietDeps:
+          settings.compile.sassDeprecationWarnings !== undefined
+            ? !settings.compile.sassDeprecationWarnings
+            : settings.compile.sassOptions.quietDeps ?? true,
       }).on("error", handleError)
     )
     .pipe(replace(/\buswds @version\b/g, `based on uswds v${pkg}`))
