@@ -235,6 +235,9 @@ function watchSass() {
     [
       `${paths.dist.theme}/**/*.scss`.replace("//", "/"),
       `${paths.src.projectSass}/**/*.scss`.replace("//", "/"),
+      ...(settings.compile.sassOptions.loadPaths ?? []).map((loadPath) =>
+        `${loadPath}/**/*.scss`.replace("//", "/")
+      ),
     ],
     buildSass
   );
