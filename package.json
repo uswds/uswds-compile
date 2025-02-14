@@ -32,7 +32,7 @@
     "gulp-replace": "1.1.4",
     "gulp-sass": "5.1.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "8.5.1",
+    "postcss": "8.5.2",
     "postcss-csso": "6.0.1",
     "sass-embedded": "1.83.4"
   },
