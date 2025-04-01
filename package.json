@@ -25,7 +25,6 @@
   "homepage": "https://github.com/uswds/uswds-compile#readme",
   "dependencies": {
     "autoprefixer": "10.4.20",
-    "del": "6.1.1",
     "gulp": "5.0.0",
     "gulp-postcss": "9.0.1",
     "gulp-rename": "2.0.0",
