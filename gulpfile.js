@@ -6,7 +6,6 @@ const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const fs = require("fs");
-const path = require("path");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
