@@ -5,7 +5,7 @@ const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
-const del = require("del");
+const fs = require("fs");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
@@ -66,7 +66,7 @@ let settings = {
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
     sassSourcemaps: true,
-    sassDeprecationWarnings: false
+    sassDeprecationWarnings: false,
   },
   sprite: {
     width: 24,
@@ -123,9 +123,7 @@ const copy = {
     );
     return src(`${getSrcFrom("img")}/**/**`.replace("//", "/"), {
       encoding: false,
-    }).pipe(
-      dest(paths.dist.img)
-    );
+    }).pipe(dest(paths.dist.img));
   },
   js() {
     log(
@@ -256,7 +254,7 @@ function buildSprite() {
 
   return src(spritePaths, {
     allowEmpty: true,
-    encoding: false
+    encoding: false,
   })
     .pipe(svgSprite())
     .pipe(rename("usa-icons.svg"))
@@ -267,14 +265,25 @@ function buildSprite() {
 function renameSprite() {
   return src(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"), {
     allowEmpty: true,
-    encoding: false
+    encoding: false,
   })
     .pipe(rename(`${paths.dist.img}/sprite.svg`.replace("//", "/")))
     .pipe(dest(`./`));
 }
 
-function cleanSprite() {
-  return del(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"));
+function cleanSprite(done) {
+  const filePath = `${paths.dist.img}/usa-icons.svg`.replace("//", "/");
+
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    done();
+    return true; // Success
+  } catch (error) {
+    console.error(`Error deleting file: ${error.message}`);
+    throw error; // Rethrow error to maintain similar behavior to the original
+  }
 }
 
 exports.settings = settings;
