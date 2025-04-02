@@ -271,13 +271,14 @@ function renameSprite() {
     .pipe(dest(`./`));
 }
 
-function cleanSprite() {
+function cleanSprite(done) {
   const filePath = `${paths.dist.img}/usa-icons.svg`.replace("//", "/");
 
   try {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
+    done();
     return true; // Success
   } catch (error) {
     console.error(`Error deleting file: ${error.message}`);
