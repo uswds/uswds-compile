@@ -49,7 +49,6 @@ let settings = {
             fonts: "./node_modules/@uswds/uswds/dist/fonts",
             img: "./node_modules/@uswds/uswds/dist/img",
             js: "./node_modules/@uswds/uswds/dist/js",
-            components: "./node_modules/@uswds/uswds/dist/components",
           },
         },
       },
@@ -63,7 +62,6 @@ let settings = {
         fonts: "./assets/uswds/fonts",
         js: "./assets/uswds/js",
         css: "./assets/uswds/css",
-        components: "./assets/uswds/components",
       },
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
@@ -134,15 +132,6 @@ const copy = {
     );
     return src(`${getSrcFrom("js")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.js)
-    );
-  },
-  components() {
-    log(
-      colors.blue,
-      `Copy USWDS compiled Web Components: ${getSrcFrom("components")} →  ${paths.dist.js}`
-    );
-    return src(`${getSrcFrom("components")}/**/**`.replace("//", "/")).pipe(
-      dest(paths.dist.components)
     );
   },
 };
@@ -304,8 +293,7 @@ exports.copyTheme = copy.theme;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
 exports.copyJS = copy.js;
-exports.copyWebComponents = copy.components;
-exports.copyAssets = series(copy.fonts, copy.images, copy.js, copy.components);
+exports.copyAssets = series(copy.fonts, copy.images, copy.js);
 exports.copyAll = series(copy.theme, this.copyAssets);
 exports.compileSass = series(logVersion, buildSass);
 exports.compileIcons = series(buildSprite, renameSprite, cleanSprite);
