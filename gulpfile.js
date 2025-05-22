@@ -137,9 +137,12 @@ const copy = {
     );
   },
   components() {
+    if (!fs.existsSync(getSrcFrom("components"))) return Promise.resolve();
     log(
       colors.blue,
-      `Copy USWDS compiled Web Components: ${getSrcFrom("components")} →  ${paths.dist.js}`
+      `Copy USWDS compiled Web Components: ${getSrcFrom("components")} →  ${
+        paths.dist.components
+      }`
     );
     return src(`${getSrcFrom("components")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.components)
