@@ -209,8 +209,8 @@ function buildSass() {
   })
     .pipe(
       sass({
-        outputStyle: "compressed",
-        includePaths: buildSettings.includes,
+        style: "compressed",
+        loadPaths: buildSettings.includes,
         quietDeps: !settings.compile.sassDeprecationWarnings,
       }).on("error", handleError)
     )
