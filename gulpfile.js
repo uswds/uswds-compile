@@ -5,7 +5,7 @@ const path = require("path");
 const postcss = require("gulp-postcss");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass")(require("sass-embedded"));
-const del = require("del");
+const fs = require("fs");
 const svgSprite = require("gulp-svgstore");
 const rename = require("gulp-rename");
 const log = console.log;
@@ -49,6 +49,7 @@ let settings = {
             fonts: "./node_modules/@uswds/uswds/dist/fonts",
             img: "./node_modules/@uswds/uswds/dist/img",
             js: "./node_modules/@uswds/uswds/dist/js",
+            components: "./node_modules/@uswds/uswds/dist/components",
           },
         },
       },
@@ -62,6 +63,7 @@ let settings = {
         fonts: "./assets/uswds/fonts",
         js: "./assets/uswds/js",
         css: "./assets/uswds/css",
+        components: "./assets/uswds/components",
       },
     },
     browserslist: ["> 2%", "last 2 versions", "IE 11", "not dead"],
@@ -132,6 +134,18 @@ const copy = {
     );
     return src(`${getSrcFrom("js")}/**/**`.replace("//", "/")).pipe(
       dest(paths.dist.js)
+    );
+  },
+  components() {
+    if (!fs.existsSync(getSrcFrom("components"))) return Promise.resolve();
+    log(
+      colors.blue,
+      `Copy USWDS compiled Web Components: ${getSrcFrom("components")} →  ${
+        paths.dist.components
+      }`
+    );
+    return src(`${getSrcFrom("components")}/**/**`.replace("//", "/")).pipe(
+      dest(paths.dist.components)
     );
   },
 };
@@ -271,8 +285,19 @@ function renameSprite() {
     .pipe(dest(`./`));
 }
 
-function cleanSprite() {
-  return del(`${paths.dist.img}/usa-icons.svg`.replace("//", "/"));
+function cleanSprite(done) {
+  const filePath = `${paths.dist.img}/usa-icons.svg`.replace("//", "/");
+
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    done();
+    return true; // Success
+  } catch (error) {
+    console.error(`Error deleting file: ${error.message}`);
+    throw error; // Rethrow error to maintain similar behavior to the original
+  }
 }
 
 exports.settings = settings;
@@ -282,7 +307,8 @@ exports.copyTheme = copy.theme;
 exports.copyFonts = copy.fonts;
 exports.copyImages = copy.images;
 exports.copyJS = copy.js;
-exports.copyAssets = series(copy.fonts, copy.images, copy.js);
+exports.copyWebComponents = copy.components;
+exports.copyAssets = series(copy.fonts, copy.images, copy.js, copy.components);
 exports.copyAll = series(copy.theme, this.copyAssets);
 exports.compileSass = series(logVersion, buildSass);
 exports.compileIcons = series(buildSprite, renameSprite, cleanSprite);
