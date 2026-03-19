@@ -21,8 +21,6 @@ jobs:
       - name: Update npm version
         run: npm install -g npm@latest # OIDC requires npm v11.5.1 or later
       - run: npm ci
-      - run: npm run build --if-present
-      # - run: npm run test
       - run: npm publish
       - name: Create GitHub Release
         uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # pin v2.6.1
