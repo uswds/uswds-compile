@@ -21,11 +21,20 @@ jobs:
       - name: Update npm version
         run: npm install -g npm@latest # OIDC requires npm v11.5.1 or later
       - run: npm ci
-      - name: Audit dependencies
+      - name: Check for vulnerabilities
         run: |
-          audit_output=$(npm audit --json || true)
-          vuln_count=$(node -e "const fs=require('fs'); const input=fs.readFileSync(0,'utf8'); const data=JSON.parse(input || '{}'); const total=(data.metadata && data.metadata.vulnerabilities && Object.values(data.metadata.vulnerabilities).reduce((sum,v)=>sum+(Number(v)||0),0)) || 0; console.log(total);" <<< "$audit_output")
-          echo "Vulnerabilities: $vuln_count"
+          # Capture audit result (ignore exit code with || true)
+          AUDIT_RESULT=$(npm audit --json || true)
+          CRITICAL=$(echo $AUDIT_RESULT | jq '.metadata.vulnerabilities.critical // 0')
+          HIGH=$(echo $AUDIT_RESULT | jq '.metadata.vulnerabilities.high // 0')
+          TOTAL=$(echo $AUDIT_RESULT | jq '.metadata.vulnerabilities.total // 0')
+          
+          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
+            echo "Found $CRITICAL critical and $HIGH high severity vulnerabilities"
+            echo "Please review and fix these vulnerabilities"
+            exit 1
+          fi
+          echo "No critical or high severity vulnerabilities found. Total vulnerabilities: $TOTAL"
       - name: Pack package
         run: npm pack
       - name: Upload pack artifact
