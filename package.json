@@ -36,7 +36,7 @@
     "sass-embedded": "1.98.0"
   },
   "devDependencies": {
-    "@uswds/uswds": "^3.14.0",
+    "@uswds/uswds": "^3.11.0",
     "uswds": "^2.14.0"
   },
   "overrides": {
