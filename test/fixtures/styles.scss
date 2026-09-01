@@ -1,0 +1,6 @@
+@use "uswds-core" with (
+  $theme-image-path: "../img",
+  $theme-font-path: "../fonts",
+  $theme-show-notifications: false
+);
+@forward "uswds";

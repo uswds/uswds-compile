@@ -1,7 +1,6 @@
 .DS_store
 node_modules/
 npm-debug.log*
-test/
 path/
 *.tgz
 assets/
