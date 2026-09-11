@@ -4,7 +4,8 @@
   "description": "A Gulp-based compiler for USWDS Sass",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
+    "test:update-snapshot": "node test/update-snapshot.js",
     "init": "gulp init",
     "watch": "gulp watch"
   },
@@ -31,7 +32,7 @@
     "gulp-replace": "1.1.4",
     "gulp-sass": "5.1.0",
     "gulp-svgstore": "9.0.0",
-    "postcss": "8.5.16",
+    "postcss": "8.5.26",
     "postcss-csso": "6.0.1",
     "sass-embedded": "1.98.0"
   },
